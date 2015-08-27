@@ -1,0 +1,34 @@
+/**
+ * Sample language file, testing out syntax and features
+ */
+
+//resembles a position point
+public class Position
+	public f32 x, y
+
+	Position(this, f32 x = 0, f32 y = 0)
+		this.x = x
+		this.y = y
+	
+	~Position(this)
+		return
+
+
+private class Car
+	public u32 maxspeed = 20
+	private Position pos
+
+	def moveforward(this, f32 percentage)
+		f32 distance = percentage * this.maxspeed
+		this.pos.x += distance
+
+
+def makecar() -> Car*
+	Car* car = new Car()
+	return car
+
+Car* thecar = makecar()
+
+thecar->moveforward(0.8)
+
+delete thecar
