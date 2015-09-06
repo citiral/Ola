@@ -2,6 +2,10 @@
  * Sample language file, testing out syntax and features
  */
 
+
+int bar()
+	return foo
+
 //resembles a position point
 public class Position
 	public f32 x, y
