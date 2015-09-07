@@ -1,0 +1,3 @@
+
+language features:
+	numeric constant suffix

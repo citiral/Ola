@@ -30,7 +30,7 @@ void Shell::scheduleExit()
 
 std::string Shell::getInput()
 {
-	std::string input("1 -2.501 -3 50 function + function=function -10 shitfunction functionlol a");
+	std::string input("i32 add(i32 x, i32 y) { return x + y; }");
 	//input += getchar();
 	//std::cin >> input;
 	return input;

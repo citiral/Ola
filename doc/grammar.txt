@@ -1,4 +1,52 @@
 /////////////////////////////////////////////////////
+//example code 									   //
+/////////////////////////////////////////////////////
+int add(i32 x, i32 y)
+	i32 z = x + y
+	return z
+
+int next(i32 number)
+	return add(number)
+
+int main()
+	print("number after %d is %d", 4, next(4))
+
+
+
+/////////////////////////////////////////////////////
+//global		                                   //
+/////////////////////////////////////////////////////
+program =
+	block, {block}
+
+block =
+	| function
+
+function =
+	type, identifier, "(", {type, identifier}, ")", "{", {statement}, "}"
+
+statement =
+	| [type] identifier "=" expression
+	| "return" expression
+	| expression
+
+expression =
+	| identifier
+	| identifier "(" {expression} ")"
+	| expression ("+"|"-"|"*"|"/") expression
+	| ("-"|"+") expression
+
+type =
+	(identifier|"i32"|"i64"|"f32"|"f64"|"char"){*}
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////
 //basic characters                                 //
 /////////////////////////////////////////////////////
 character   = [a-Z] | "_"

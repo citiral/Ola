@@ -84,12 +84,8 @@ namespace ola {
         do {
             if (isalnum(curChar()) || curChar() == '_')
                 value.string += eatChar();
-            else if (isspace(curChar()) || curChar() == '\0')
-                return Token::Identifier;
             else {
-                //reset the bufferindex
-                _bufferIndex -= value.string.length();
-                return Token::None;
+                return Token::Identifier;
             }
         } while (true);
     }
@@ -111,20 +107,32 @@ namespace ola {
             } else if (!dotFound && curChar() == '.') {
                 dotFound = true;
                 value.string += eatChar();
-            } else if (isspace(curChar()) || curChar() == '\0'){
-                return Token::Numeric;
             } else {
-                //reset the bufferindex
-                _bufferIndex -= value.string.length();
-                return Token::None;
+                return Token::Numeric;
             }
         } while (true);
     }
 
     Token Lexer::parseKeyword()
     {
-        if (tryCompareAndSkipNext("function"))
-            return Token::Function;
+        if (tryCompareAndSkipNext("return"))
+            return Token::Return;
+        else if (tryCompareAndSkipNext("i32")) {
+            value.string = "i32";
+            return Token::Type;
+        }
+        else if (tryCompareAndSkipNext("i64")) {
+            value.string = "i64";
+            return Token::Type;
+        }
+        else if (tryCompareAndSkipNext("f32")) {
+            value.string = "f32";
+            return Token::Type;
+        }
+        else if (tryCompareAndSkipNext("f64")) {
+            value.string = "f64";
+            return Token::Type;
+        }
         return Token::None;
     }
 

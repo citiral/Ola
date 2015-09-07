@@ -25,8 +25,9 @@ NumberFloatingAST::NumberFloatingAST(f64 value)
 /********************************************
  * VariableAST                              *
  ********************************************/
-VariableAST::VariableAST(std::string name)
-        : _name(name) { }
+VariableAST::VariableAST(std::string name, std::string type)
+        : _name(name),
+          _type(type) { }
 
 /********************************************
  * BinaryOperatorAST                        *
@@ -39,13 +40,15 @@ BinaryOperatorAST::BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> le
 /********************************************
  * FunctionPrototypeAST                     *
  ********************************************/
-FunctionPrototypeAST::FunctionPrototypeAST(std::string name, std::vector<std::string> args)
+FunctionPrototypeAST::FunctionPrototypeAST(std::string name, std::vector<std::string> args, std::vector<std::string> types)
         : _name(name),
-          _args(std::move(args)){ }
+          _args(std::move(args)),
+          _types(types) { }
 
 /********************************************
  * FunctionAST                     *
  ********************************************/
-FunctionAST::FunctionAST(std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionAST> body)
-    : _prototype(std::move(prototype)),
+FunctionAST::FunctionAST(std::string type, std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionAST> body)
+    : _type(type),
+    _prototype(std::move(prototype)),
     _body(std::move(body)) { }

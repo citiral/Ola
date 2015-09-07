@@ -45,10 +45,11 @@ private:
  ********************************************/
 class VariableAST : ExpressionAST {
 public:
-    VariableAST(std::string name);
+    VariableAST(std::string name, std::string type);
 
 private:
     std::string _name;
+    std::string _type;
 };
 
 /********************************************
@@ -69,11 +70,12 @@ private:
  ********************************************/
 class FunctionPrototypeAST {
 public:
-    FunctionPrototypeAST(std::string name, std::vector<std::string> args);
+    FunctionPrototypeAST(std::string name, std::vector<std::string> args, std::vector<std::string> types);
 
 private:
     std::string _name;
     std::vector<std::string> _args;
+    std::vector<std::string> _types;
 };
 
 /********************************************
@@ -81,9 +83,10 @@ private:
  ********************************************/
 class FunctionAST {
 public:
-    FunctionAST(std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionAST> body);
+    FunctionAST(std::string type, std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionAST> body);
 
 private:
+    std::string _type;
     std::unique_ptr<FunctionPrototypeAST> _prototype;
     std::unique_ptr<ExpressionAST> _body;
 };
