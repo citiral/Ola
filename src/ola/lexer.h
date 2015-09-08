@@ -21,6 +21,7 @@ enum class Token {
 	Char_closeRoundBracket = 110,
 	Char_openCurlyBracket = 111,
 	Char_closeCurlyBracket = 112,
+	Char_semicolon = 113,
 
 	Eob = 254,
 	Eof = 255,

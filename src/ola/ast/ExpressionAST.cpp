@@ -12,17 +12,11 @@ namespace ola {
     }
 
     std::unique_ptr<ExpressionAST> ExpressionAST::generate(Lexer &l) {
-        //store the current token for later
-        Token primaryTok = l.curToken();
-
         //try to parse the expression as a primary
         auto LHS = generatePrimary(l);
 
         //the next token can either be '(' which initiates a call, or an operator
-        if (l.curToken() == Token::Char_openRoundBracket) {
-            COMPILE_ASSERT(primaryTok == Token::Identifier, "Only identifiers can be called.");
-            COMPILE_GENERATE_AND_RETURN_TODO(l, "Implement function call.");
-        } if (l.curToken() == Token::Operator) {
+        if (l.curToken() == Token::Operator) {
             LHS = std::move(BinaryOperatorAST::generate(l, std::move(LHS)));
         }
 

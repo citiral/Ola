@@ -36,7 +36,7 @@ add_library (ola SHARED
 		${PROJECT_SOURCE_DIR}/src/ola/ast/VariableAST.h
 		${PROJECT_SOURCE_DIR}/src/ola/ast/BinaryOperatorAST.cpp
 		${PROJECT_SOURCE_DIR}/src/ola/ast/BinaryOperatorAST.h
-		${PROJECT_SOURCE_DIR}/src/ola/ast/FunctionPrototypeAST.cpp src/ola/ast/FunctionPrototypeAST.h src/ola/ast/FunctionAST.cpp src/ola/ast/FunctionAST.h src/ola/compileassert.h)
+		${PROJECT_SOURCE_DIR}/src/ola/ast/FunctionPrototypeAST.cpp src/ola/ast/FunctionPrototypeAST.h src/ola/ast/FunctionAST.cpp src/ola/ast/FunctionAST.h src/ola/compileassert.h src/ola/ast/ExpressionKillerAST.cpp src/ola/ast/ExpressionKillerAST.h)
 
 #an ola-front end resembling a shell. depends on ola
 add_executable (olash

@@ -3,6 +3,8 @@
 //
 
 #include "ExpressionSeriesAST.h"
+#include "ExpressionKillerAST.h"
+#include "../compileassert.h"
 
 namespace ola {
     ExpressionSeriesAST::ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body)
@@ -24,12 +26,27 @@ namespace ola {
         std::vector<std::unique_ptr<ExpressionAST>> expressions;
 
         //a statement series ends with a curly bracket
-        while (!(l.curToken() == Token::Char_closeCurlyBracket)) {
-            auto expr = ExpressionAST::generate(l);
-            if (expr != nullptr)
-                expressions.push_back(std::move(expr));
-        }
+        while (1) {
+            //if there is a close curly bracket, stop the series
+            if (l.curToken() == Token::Char_closeCurlyBracket) {
+                return std::make_unique<ExpressionSeriesAST>(std::move(expressions));
+            }
 
-        return std::make_unique<ExpressionSeriesAST>(std::move(expressions));
+            //parse an expression
+            auto expr = ExpressionAST::generate(l);
+
+            if (expr != nullptr) {
+                if (l.curToken() == Token::Char_semicolon) {
+                    //generate an expressionkiller
+                    expressions.push_back(std::make_unique<ExpressionKillerAST>(std::move(expr)));
+                    //eat the semicolon and continue
+                    l.nextToken();
+                } else if (l.curToken() == Token::Char_closeCurlyBracket) {
+                    expressions.push_back(std::move(expr));
+                } else {
+                    COMPILE_GENERATE_AND_RETURN_ERROR(l, "Expected ';' or '}' in expressionseries.");
+                }
+            }
+        }
     }
 }

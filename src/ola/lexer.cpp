@@ -151,6 +151,8 @@ namespace ola {
     }
 
     Token Lexer::parseSymbol() {
+        if (tryCompareAndSkipNextSymbol(";"))
+            return Token::Char_semicolon;
         if (tryCompareAndSkipNextSymbol("->"))
             return Token::Char_arrow;
         if (tryCompareAndSkipNextSymbol("++"))
