@@ -20,10 +20,12 @@ namespace ola {
     void OlaToLlvmCompiler::feed(std::string code)
     {
         _lexer.loadBuffer(code.c_str());
+        /*std::cout << "tokens: ";
+        while (!_lexer.atEndOfBuffer())
+            std::cout << (int)_lexer.nextToken() << " ";
+        std::cout << "\n";*/
         compileProgram();
     }
-
-
 
     void OlaToLlvmCompiler::compileProgram() {
         //get the first token

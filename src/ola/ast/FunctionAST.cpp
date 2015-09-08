@@ -28,6 +28,8 @@ namespace ola {
         COMPILE_ASSERT(l.curToken() == Token::Char_closeCurlyBracket, "Expected } At the end of the function body.");
         l.nextToken();
 
+        COMPILE_ASSERT(body->type() == prototype->type(), "Return value is of incorrect type");
+
         return std::make_unique<FunctionAST>(std::move(prototype), std::move(body));
     }
 }

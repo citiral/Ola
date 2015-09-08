@@ -25,7 +25,9 @@ namespace ola {
 
         //a statement series ends with a curly bracket
         while (!(l.curToken() == Token::Char_closeCurlyBracket)) {
-            expressions.push_back(std::move(ExpressionAST::generate(l)));
+            auto expr = ExpressionAST::generate(l);
+            if (expr != nullptr)
+                expressions.push_back(std::move(expr));
         }
 
         return std::make_unique<ExpressionSeriesAST>(std::move(expressions));

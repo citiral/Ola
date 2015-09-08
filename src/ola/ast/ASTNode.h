@@ -12,7 +12,7 @@ namespace ola {
     public:
         virtual ~ASTNode() { };
 
-        virtual void log(std::ostream &s);
+        virtual void log(std::ostream &s) = 0;
     };
 }
 

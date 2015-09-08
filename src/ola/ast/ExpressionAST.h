@@ -17,6 +17,7 @@ namespace ola {
         virtual std::string type() = 0;
 
         static std::unique_ptr<ExpressionAST> generate(Lexer& l);
+        static std::unique_ptr<ExpressionAST> generatePrimary(Lexer& l);
     };
 }
 

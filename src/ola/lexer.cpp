@@ -157,15 +157,19 @@ namespace ola {
             return Token::Char_plusplus;
         if (tryCompareAndSkipNextSymbol("--"))
             return Token::Char_minmin;
-        if (tryCompareAndSkipNextSymbol("+"))
-            return Token::Char_plus;
-        if (tryCompareAndSkipNextSymbol("-"))
-            return Token::Char_min;
-        if (tryCompareAndSkipNextSymbol("*"))
-            return Token::Char_multiply;
-        if (tryCompareAndSkipNextSymbol("/"))
-            return Token::Char_divide;
-        if (tryCompareAndSkipNextSymbol("."))
+        if (tryCompareAndSkipNextSymbol("+")) {
+            value.character = '+';
+            return Token::Operator;
+        } if (tryCompareAndSkipNextSymbol("-")) {
+            value.character = '-';
+            return Token::Operator;
+        } if (tryCompareAndSkipNextSymbol("*")) {
+            value.character = '*';
+            return Token::Operator;
+        } if (tryCompareAndSkipNextSymbol("/")) {
+            value.character = '/';
+            return Token::Operator;
+        } if (tryCompareAndSkipNextSymbol("."))
             return Token::Char_dot;
         if (tryCompareAndSkipNextSymbol(","))
             return Token::Char_comma;

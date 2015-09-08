@@ -12,6 +12,13 @@
     return nullptr;\
 }
 
+#define COMPILE_GENERATE_AND_RETURN_TODO(lex, message) \
+{\
+    std::cout << "TODO at " << __FILE__ << "[" << __LINE__ << "]: " << message << "\n";\
+    lex.nextToken();\
+    return nullptr;\
+}
+
 #define COMPILE_RETURN_ERROR(message) \
 {\
     std::cout << "Error: " << message << "\n";\

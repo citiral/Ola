@@ -9,11 +9,11 @@ namespace ola {
             : _value(value) { }
 
     void NumberIntegerAST::log(std::ostream &s) {
-        s << "i32: " << _value;
+        s << type()  << ": " << _value;
     }
 
     std::string NumberIntegerAST::type() {
-        return "i64";
+        return "i32";
     }
 
     std::unique_ptr<NumberIntegerAST> NumberIntegerAST::generate(Lexer &l) {

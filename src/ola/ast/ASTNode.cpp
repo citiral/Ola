@@ -4,7 +4,4 @@
 
 #include "ASTNode.h"
 namespace ola {
-    void ASTNode::log(std::ostream &s) {
-        s << "Unimplemented log function.\n";
-    }
 }

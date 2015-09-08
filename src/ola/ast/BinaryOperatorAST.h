@@ -6,13 +6,29 @@
 #define OLA_BINARYOPERATORAST_H
 
 #include "ExpressionAST.h"
+#include "../types.h"
 #include <memory>
+
+#define PRECEDENCE_UNKNOWN 1
+#define PRECEDENCE_PLUS 20
+#define PRECEDENCE_MIN  20
+#define PRECEDENCE_MUL  40
+#define PRECEDENCE_DIV  40
 
 namespace ola {
     class BinaryOperatorAST : public ExpressionAST {
     public:
         BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
                           std::unique_ptr<ExpressionAST> rightExpression);
+
+        virtual std::string type() override;
+        void log(std::ostream &s) override;
+
+
+        static u32 getPrecendence(char opp);
+
+        //fully parses calculation starting from the current state of the lexer. The LHS must already have been parsed
+        static std::unique_ptr<ExpressionAST> generate(Lexer& l, std::unique_ptr<ExpressionAST> LHS);
 
     private:
         char _operator;
