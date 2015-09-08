@@ -49,6 +49,8 @@ namespace ola {
 		~Lexer();
 
 		Token nextToken();
+		Token curToken();
+
 		bool atEndOfBuffer();
 
 		//sets the buffer to parse to the buffer* and resets the buffer index. The buffer should be null terminated
@@ -85,9 +87,8 @@ namespace ola {
 		//returns true if the next word is equal to `word` and if so, skips it in the buffer. it stops at any non matching character
 		bool tryCompareAndSkipNextSymbol(const char *word);
 
-
-		std::string _currentToken;
         const char* _buffer;
 		unsigned int _bufferIndex;
+		Token _lastToken;
 	};
 }

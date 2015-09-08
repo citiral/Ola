@@ -22,7 +22,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_library (ola SHARED
 		${PROJECT_SOURCE_DIR}/src/ola/ola.cpp
 		${PROJECT_SOURCE_DIR}/src/ola/lexer.cpp
-		src/ola/ast.cpp src/ola/ast.h src/ola/types.h)
+		src/ola/ast.h src/ola/types.h src/ola/ast/ASTNode.cpp src/ola/ast/ASTNode.h src/ola/ast/ExpressionAST.cpp src/ola/ast/ExpressionAST.h src/ola/ast/ExpressionSeriesAST.cpp src/ola/ast/ExpressionSeriesAST.h src/ola/ast/NumberIntegerAST.cpp src/ola/ast/NumberIntegerAST.h src/ola/ast/VariableAST.cpp src/ola/ast/VariableAST.h src/ola/ast/BinaryOperatorAST.cpp src/ola/ast/BinaryOperatorAST.h src/ola/ast/FunctionPrototypeAST.cpp src/ola/ast/FunctionPrototypeAST.h src/ola/ast/FunctionAST.cpp src/ola/ast/FunctionAST.h src/ola/compileassert.h)
 
 #an ola-front end resembling a shell. depends on ola
 add_executable (olash

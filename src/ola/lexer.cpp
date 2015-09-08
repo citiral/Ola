@@ -48,7 +48,12 @@ namespace ola {
     Token Lexer::nextToken()
     {
         //and then parse and return the next token
-        return parseNext();
+        return _lastToken = parseNext();
+    }
+
+    Token Lexer::curToken()
+    {
+        return _lastToken;
     }
 
     Token Lexer::parseNext() {
