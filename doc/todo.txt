@@ -1,3 +1,4 @@
 
 language features:
 	numeric constant suffix
+	parse floating types

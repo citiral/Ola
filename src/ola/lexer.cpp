@@ -21,6 +21,10 @@ namespace ola {
         _bufferIndex = 0;
     }
 
+    bool Lexer::atEndOfBuffer() {
+        return _buffer[_bufferIndex] == '\0';
+    }
+
     void Lexer::nextChar() {
         if (_buffer[_bufferIndex] != '\0')
             _bufferIndex++;
@@ -59,6 +63,9 @@ namespace ola {
 
         //first check if it is a keyword and return it
         ret = parseKeyword();
+        if (ret != Token::None)
+            return ret;
+        ret = parseSymbol();
         if (ret != Token::None)
             return ret;
         ret = parseIdentifier();
@@ -115,28 +122,60 @@ namespace ola {
 
     Token Lexer::parseKeyword()
     {
-        if (tryCompareAndSkipNext("return"))
+        if (tryCompareAndSkipNextKeyword("return"))
             return Token::Return;
-        else if (tryCompareAndSkipNext("i32")) {
+        else if (tryCompareAndSkipNextKeyword("i32")) {
             value.string = "i32";
             return Token::Type;
         }
-        else if (tryCompareAndSkipNext("i64")) {
+        else if (tryCompareAndSkipNextKeyword("i64")) {
             value.string = "i64";
             return Token::Type;
         }
-        else if (tryCompareAndSkipNext("f32")) {
+        else if (tryCompareAndSkipNextKeyword("f32")) {
             value.string = "f32";
             return Token::Type;
         }
-        else if (tryCompareAndSkipNext("f64")) {
+        else if (tryCompareAndSkipNextKeyword("f64")) {
             value.string = "f64";
             return Token::Type;
+        } else if (tryCompareAndSkipNextKeyword("function")) {
+            return Token::Function;
         }
         return Token::None;
     }
 
-    bool Lexer::tryCompareAndSkipNext(const char* word)
+    Token Lexer::parseSymbol() {
+        if (tryCompareAndSkipNextSymbol("->"))
+            return Token::Char_arrow;
+        if (tryCompareAndSkipNextSymbol("++"))
+            return Token::Char_plusplus;
+        if (tryCompareAndSkipNextSymbol("--"))
+            return Token::Char_minmin;
+        if (tryCompareAndSkipNextSymbol("+"))
+            return Token::Char_plus;
+        if (tryCompareAndSkipNextSymbol("-"))
+            return Token::Char_min;
+        if (tryCompareAndSkipNextSymbol("*"))
+            return Token::Char_multiply;
+        if (tryCompareAndSkipNextSymbol("/"))
+            return Token::Char_divide;
+        if (tryCompareAndSkipNextSymbol("."))
+            return Token::Char_dot;
+        if (tryCompareAndSkipNextSymbol(","))
+            return Token::Char_comma;
+        if (tryCompareAndSkipNextSymbol("("))
+            return Token::Char_openRoundBracket;
+        if (tryCompareAndSkipNextSymbol(")"))
+            return Token::Char_closeRoundBracket;
+        if (tryCompareAndSkipNextSymbol("{"))
+            return Token::Char_openCurlyBracket;
+        if (tryCompareAndSkipNextSymbol("}"))
+            return Token::Char_closeCurlyBracket;
+        return Token::None;
+    }
+
+    bool Lexer::tryCompareAndSkipNextKeyword(const char *word)
     {
         int wordindex = 0;
 
@@ -169,6 +208,33 @@ namespace ola {
                 _bufferIndex += wordindex;
                 return true;
             }
+        }
+        return false;
+    }
+
+    bool Lexer::tryCompareAndSkipNextSymbol(const char *word)
+    {
+        int wordindex = 0;
+
+        while(_buffer[_bufferIndex + wordindex] == word[wordindex]) {
+            //if we are at the end of the word
+            if (word[wordindex] == '\0') {
+                _bufferIndex += wordindex;
+                return true;
+            }
+
+            //if the word is not at the end, but the buffer is, return false
+            if (_buffer[_bufferIndex + wordindex] == '\0') {
+                return false;
+            }
+
+            wordindex++;
+        }
+
+        //if we are at the end of the word
+        if (word[wordindex] == '\0') {
+            _bufferIndex += wordindex;
+            return true;
         }
         return false;
     }

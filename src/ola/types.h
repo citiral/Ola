@@ -9,6 +9,10 @@
 #define i32 int
 #define i64 long long int
 
+#define u16 unsigned short int
+#define u32 unsigned int
+#define u64 unsigned long long int
+
 #define f32 float
 #define f64 double
 

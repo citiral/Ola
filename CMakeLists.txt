@@ -5,7 +5,7 @@ project (ola)
 SET (CC clang)
 SET (CXX clang++)
 
-set (CXX_FLAGS "-std=c++11")
+set (CXX_FLAGS "-std=c++14 -Wall -Werror=return-type")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
 
 

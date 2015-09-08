@@ -20,6 +20,7 @@ int Shell::enter()
 	//while (!_shouldStop) {
 	std::cout << "running code: " << getInput() << "\n";
 	executeCode(getInput());
+	return 0;
 	//}
 }
 
@@ -30,7 +31,9 @@ void Shell::scheduleExit()
 
 std::string Shell::getInput()
 {
-	std::string input("i32 add(i32 x, i32 y) { return x + y; }");
+	std::string input("function add(i32 x, i32 y) -> i32 {\n"
+							  "10\n"
+							  "}");
 	//input += getchar();
 	//std::cin >> input;
 	return input;
