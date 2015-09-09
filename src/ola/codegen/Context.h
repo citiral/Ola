@@ -18,10 +18,19 @@ namespace ola {
     public:
         Context();
         ~Context();
+
+        /*********************************\
+        *scope related functions         *
+        \*********************************/
+        Scope* getScope() const;
         void pushScope();
         void popScope();
 
-        Scope* getScope() const;
+        /*********************************\
+        *type related functions          *
+        \*********************************/
+        llvm::Type* getType(std::string name);
+        llvm::Type* getPrimitiveType(std::string name);
 
         std::unique_ptr<llvm::Module> module;
         llvm::IRBuilder<> builder;

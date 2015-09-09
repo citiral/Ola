@@ -48,8 +48,10 @@ namespace ola {
 
     std::unique_ptr<ASTNode> OlaToLlvmCompiler::compileBlock() {
         switch (_lexer.curToken()) {
-            case Token::Function:
-                return FunctionAST::generate(_lexer);
+            case Token::Function: {
+                auto f = FunctionAST::generate(_lexer);
+                return std::move(f);
+            }
             default:
                 COMPILE_GENERATE_AND_RETURN_ERROR(_lexer, "Unknown token in block.");
         }

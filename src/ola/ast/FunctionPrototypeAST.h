@@ -7,8 +7,10 @@
 
 #include "ASTNode.h"
 #include "../lexer.h"
+#include "../codegen/Context.h"
 #include <memory>
 #include <vector>
+#include <llvm/IR/Function.h>
 
 namespace ola {
 
@@ -18,6 +20,7 @@ namespace ola {
                              std::vector<std::string> types);
 
         virtual void log(std::ostream &s);
+        llvm::Function* codegen(Context* c);
 
         //generates this node from the current state of the lexer.
         static std::unique_ptr<FunctionPrototypeAST> generate(Lexer &l);
