@@ -21,9 +21,8 @@ namespace ola {
         BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
                           std::unique_ptr<ExpressionAST> rightExpression);
 
-        virtual std::string type() override;
         void log(std::ostream &s) override;
-
+        virtual llvm::Value* codegen(Context* c) override;
 
         static u32 getPrecendence(char opp);
 

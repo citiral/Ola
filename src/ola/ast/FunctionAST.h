@@ -16,6 +16,7 @@ namespace ola {
         FunctionAST(std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionSeriesAST> body);
 
         virtual void log(std::ostream &s) override;
+        llvm::Function* codegen(Context* c);
 
         static std::unique_ptr<FunctionAST> generate(Lexer& l);
     private:

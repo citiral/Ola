@@ -13,15 +13,15 @@
 namespace ola {
     class NumberIntegerAST : public ExpressionAST {
     public:
-        NumberIntegerAST(i64 value);
+        NumberIntegerAST(i32 value);
 
         void log(std::ostream &s) override;
-        std::string type() override;
+        virtual llvm::Value* codegen(Context* c) override;
 
         static std::unique_ptr<NumberIntegerAST> generate(Lexer& l);
 
     private:
-        i64 _value;
+        i32 _value;
     };
 }
 

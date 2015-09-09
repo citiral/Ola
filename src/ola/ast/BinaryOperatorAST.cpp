@@ -4,6 +4,7 @@
 
 #include "BinaryOperatorAST.h"
 #include "../compileassert.h"
+#include "../codegenassert.h"
 
 namespace ola {
     BinaryOperatorAST::BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
@@ -46,17 +47,11 @@ namespace ola {
                 }
             }
 
-            COMPILE_ASSERT(expr->type() == RHS->type(), "Types mismatch in binary operator.");
-
             //merge the expressions
             expr = std::make_unique<BinaryOperatorAST>(opp, std::move(expr), std::move(RHS));
         }
 
         return std::move(expr);
-    }
-
-    std::string BinaryOperatorAST::type() {
-        return _leftExpression->type();
     }
 
     void BinaryOperatorAST::log(std::ostream &s) {
@@ -67,5 +62,27 @@ namespace ola {
         s << "(";
         _rightExpression->log(s);
         s << ")";
+    }
+
+    llvm::Value* BinaryOperatorAST::codegen(Context* c) {
+        //first codegen both arms
+        auto LHS = _leftExpression->codegen(c);
+        auto RHS = _rightExpression->codegen(c);
+
+        if (!LHS || !RHS)
+            return nullptr;
+
+        CODEGEN_ASSERT(LHS->getType() == RHS->getType(), "Types in binary operation should be equal.");
+
+        if (_operator == '+')
+            return c->builder.CreateAdd(LHS, RHS, "binadd");
+        if (_operator == '-')
+            return c->builder.CreateSub(LHS, RHS, "binsub");
+        if (_operator == '*')
+            return c->builder.CreateMul(LHS, RHS, "binmul");
+        if (_operator == '/')
+            return c->builder.CreateSDiv(LHS, RHS, "bindiv");
+
+        CODEGEN_RETURN_ERROR("Unknown operator '" << _operator << "'");
     }
 }

@@ -14,8 +14,8 @@ namespace ola {
     public:
         ExpressionKillerAST(std::unique_ptr<ExpressionAST> expression);
 
-        virtual std::string type();
-        virtual void log(std::ostream &s);
+        virtual void log(std::ostream &s) override;
+        virtual llvm::Value* codegen(Context* c) override;
 
     private:
         std::unique_ptr<ExpressionAST> _expression;

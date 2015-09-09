@@ -16,8 +16,8 @@ namespace ola {
     public:
         ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body);
 
-        virtual std::string type() override;
         virtual void log(std::ostream &s) override;
+        virtual llvm::Value* codegen(Context* c) override;
 
         static std::unique_ptr<ExpressionSeriesAST> generate(Lexer& l);
 

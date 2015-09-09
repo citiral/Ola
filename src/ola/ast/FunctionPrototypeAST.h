@@ -19,8 +19,6 @@ namespace ola {
 
         virtual void log(std::ostream &s);
 
-        std::string type();
-
         //generates this node from the current state of the lexer.
         static std::unique_ptr<FunctionPrototypeAST> generate(Lexer &l);
 

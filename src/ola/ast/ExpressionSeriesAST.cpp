@@ -10,10 +10,6 @@ namespace ola {
     ExpressionSeriesAST::ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body)
             : _body(std::move(body)) { }
 
-    std::string ExpressionSeriesAST::type() {
-        return _body.back()->type();
-    }
-
     void ExpressionSeriesAST::log(std::ostream &s) {
         s << "expression series: ";
         for (u32 i = 0; i < _body.size(); i++) {
@@ -48,5 +44,12 @@ namespace ola {
                 }
             }
         }
+    }
+
+    llvm::Value* ExpressionSeriesAST::codegen(Context* c) {
+        llvm::Value* last = nullptr;
+        for (u32 i = 0 ; i < _body.size() ; i++)
+            last = _body[i]->codegen(c);
+        return last;
     }
 }

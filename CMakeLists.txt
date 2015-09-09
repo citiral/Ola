@@ -14,6 +14,10 @@ find_package(LLVM REQUIRED CONFIG)
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
 message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 
+include_directories(${LLVM_INCLUDE_DIRS})
+add_definitions(${LLVM_DEFINITIONS})
+llvm_map_components_to_libnames(llvm_libs support core irreader)
+
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -36,7 +40,9 @@ add_library (ola SHARED
 		${PROJECT_SOURCE_DIR}/src/ola/ast/VariableAST.h
 		${PROJECT_SOURCE_DIR}/src/ola/ast/BinaryOperatorAST.cpp
 		${PROJECT_SOURCE_DIR}/src/ola/ast/BinaryOperatorAST.h
-		${PROJECT_SOURCE_DIR}/src/ola/ast/FunctionPrototypeAST.cpp src/ola/ast/FunctionPrototypeAST.h src/ola/ast/FunctionAST.cpp src/ola/ast/FunctionAST.h src/ola/compileassert.h src/ola/ast/ExpressionKillerAST.cpp src/ola/ast/ExpressionKillerAST.h)
+		${PROJECT_SOURCE_DIR}/src/ola/ast/FunctionPrototypeAST.cpp src/ola/ast/FunctionPrototypeAST.h src/ola/ast/FunctionAST.cpp src/ola/ast/FunctionAST.h src/ola/compileassert.h src/ola/ast/ExpressionKillerAST.cpp src/ola/ast/ExpressionKillerAST.h src/ola/ast/FunctionCallAST.cpp src/ola/ast/FunctionCallAST.h src/ola/codegen/Context.cpp src/ola/codegen/Context.h src/ola/codegen/Scope.cpp src/ola/codegen/Scope.h src/ola/codegenassert.h)
+
+target_link_libraries(ola ${llvm_libs})
 
 #an ola-front end resembling a shell. depends on ola
 add_executable (olash
@@ -44,4 +50,5 @@ add_executable (olash
 	${PROJECT_SOURCE_DIR}/src/olash/shell.cpp
 )
 target_link_libraries (olash ola)
+
 set_property (TARGET olash PROPERTY INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/src/ola/)

@@ -10,13 +10,13 @@
 namespace ola {
     class VariableAST : public ExpressionAST {
     public:
-        VariableAST(std::string name, std::string type);
+        VariableAST(std::string name);
 
-        std::string type() { return _type; }
+        virtual void log(std::ostream &s);
+        virtual llvm::Value* codegen(Context* c) override;
 
     private:
         std::string _name;
-        std::string _type;
     };
 }
 

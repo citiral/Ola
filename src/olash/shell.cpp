@@ -31,14 +31,13 @@ void Shell::scheduleExit()
 
 std::string Shell::getInput()
 {
-	std::string input("function add(i32 x, i32 y) -> i32 {\n"
-							  "10*(2+4)*5+10-5/3*4;\n"
-							  "5+2\n"
+	std::string input("\nfunction add(i32 x, i32 y) -> i32 {\n"
+							  "\t2+4\n"
 							  "}\n"
-							  "function boop(f32 x, f32 y) -> i32\n"
-							  "{\n"
-							  "\t4 * 9\n"
-							  "}");
+			                  "function main() -> i32\n"
+			                  "{\n"
+			                  "\tadd(5+70,2*3+4*5)\n"
+			                  "}");
 	//input += getchar();
 	//std::cin >> input;
 	return input;

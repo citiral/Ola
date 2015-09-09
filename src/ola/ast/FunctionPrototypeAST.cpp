@@ -24,10 +24,6 @@ namespace ola {
         s << ") -> " << _type << "\n";
     }
 
-    std::string FunctionPrototypeAST::type() {
-        return _type;
-    }
-
     std::unique_ptr<FunctionPrototypeAST> FunctionPrototypeAST::generate(Lexer &l) {
         //eat the function token
         l.nextToken();
@@ -42,10 +38,10 @@ namespace ola {
 
         //make sure we are now in brackets
         COMPILE_ASSERT(l.curToken() == Token::Char_openRoundBracket, "Expected '(' after function identifier.");
+        l.nextToken();
 
         //keep fetching pairs of tokens until we have no more commas
-        do {
-            l.nextToken();
+        while (l.curToken() != Token::Char_closeRoundBracket) {
             //eat the type
             COMPILE_ASSERT(l.curToken() == Token::Identifier || l.curToken() == Token::Type, "Parameter should start with a type.");
             types.push_back(l.value.string);
@@ -54,7 +50,12 @@ namespace ola {
             COMPILE_ASSERT(l.curToken() == Token::Identifier, "Parameter should end with an identifier.");
             args.push_back(l.value.string);
             l.nextToken();
-        } while (l.curToken() == Token::Char_comma);
+
+            //if we do not have a ',' break
+            if (l.curToken() != Token::Char_comma)
+                break;
+            l.nextToken();
+        }
 
         //brackets should be closed
         COMPILE_ASSERT(l.curToken() == Token::Char_closeRoundBracket, "Expected ')' after function argument list.");

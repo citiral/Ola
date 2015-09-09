@@ -8,16 +8,20 @@
 #include "ASTNode.h"
 #include "../lexer.h"
 #include <memory>
+#include <llvm/IR/Value.h>
+#include "../codegen/Context.h"
 
 namespace ola {
     class ExpressionAST : public ASTNode {
     public:
         virtual ~ExpressionAST();
 
-        virtual std::string type() = 0;
+        //generates llvm IR code using the given context
+        virtual llvm::Value* codegen(Context* c) = 0;
 
         static std::unique_ptr<ExpressionAST> generate(Lexer& l);
         static std::unique_ptr<ExpressionAST> generatePrimary(Lexer& l);
+        static std::unique_ptr<ExpressionAST> generateIdentifier(Lexer& l);
     };
 }
 
