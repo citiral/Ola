@@ -2,12 +2,13 @@
 // Created by citiral on 9/8/15.
 //
 
-#include "../compileassert.h"
+#include "../astassert.h"
 #include "ExpressionAST.h"
 #include "NumberIntegerAST.h"
 #include "BinaryOperatorAST.h"
 #include "VariableAST.h"
 #include "FunctionCallAST.h"
+#include "llvm/ADT/STLExtras.h"
 
 namespace ola {
     ExpressionAST::~ExpressionAST() {
@@ -57,6 +58,6 @@ namespace ola {
         }
 
         //otherwise, we just return it as a variable ast
-        return std::make_unique<VariableAST>(identifiername);
+        return llvm::make_unique<VariableAST>(identifiername);
     }
 }

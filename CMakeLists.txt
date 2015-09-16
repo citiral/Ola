@@ -5,14 +5,16 @@ project (ola)
 SET (CC clang)
 SET (CXX clang++)
 
-set (CXX_FLAGS "-std=c++14 -Wall -Werror=return-type")
+set (CXX_FLAGS "-std=c++11 -Wall -Werror=return-type")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
 
 
 find_package(LLVM REQUIRED CONFIG)
 
-message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
-message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
+message("Found LLVM ${LLVM_PACKAGE_VERSION}")
+message("Using LLVMConfig.cmake in: ${LLVM_DIR}")
+message("llvm include dir is : ${LLVM_INCLUDE_DIRS}")
+message("llvm def dir is : ${LLVM_DEFINITIONS}")
 
 include_directories(${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
@@ -40,7 +42,7 @@ add_library (ola SHARED
 		${PROJECT_SOURCE_DIR}/src/ola/ast/VariableAST.h
 		${PROJECT_SOURCE_DIR}/src/ola/ast/BinaryOperatorAST.cpp
 		${PROJECT_SOURCE_DIR}/src/ola/ast/BinaryOperatorAST.h
-		${PROJECT_SOURCE_DIR}/src/ola/ast/FunctionPrototypeAST.cpp src/ola/ast/FunctionPrototypeAST.h src/ola/ast/FunctionAST.cpp src/ola/ast/FunctionAST.h src/ola/compileassert.h src/ola/ast/ExpressionKillerAST.cpp src/ola/ast/ExpressionKillerAST.h src/ola/ast/FunctionCallAST.cpp src/ola/ast/FunctionCallAST.h src/ola/codegen/Context.cpp src/ola/codegen/Context.h src/ola/codegen/Scope.cpp src/ola/codegen/Scope.h src/ola/codegenassert.h)
+		${PROJECT_SOURCE_DIR}/src/ola/ast/FunctionPrototypeAST.cpp src/ola/ast/FunctionPrototypeAST.h src/ola/ast/FunctionAST.cpp src/ola/ast/FunctionAST.h src/ola/astassert.h src/ola/ast/ExpressionKillerAST.cpp src/ola/ast/ExpressionKillerAST.h src/ola/ast/FunctionCallAST.cpp src/ola/ast/FunctionCallAST.h src/ola/codegen/Context.cpp src/ola/codegen/Context.h src/ola/codegen/Scope.cpp src/ola/codegen/Scope.h src/ola/codegenassert.h src/ola/dast/DASTNode.h src/ola/dast/ExpressionDAST.h src/ola/type/Type.h src/ola/dast/BinaryOperatorDAST.cpp src/ola/dast/BinaryOperatorDAST.h src/ola/type/TypeList.cpp src/ola/type/TypeList.h src/ola/type/PrimitiveType.cpp src/ola/type/PrimitiveType.h src/ola/dastassert.h src/ola/dast/ExpressionKillerDAST.cpp src/ola/dast/ExpressionKillerDAST.h src/ola/dast/DastContext.cpp src/ola/dast/DastContext.h)
 
 target_link_libraries(ola ${llvm_libs})
 
@@ -51,4 +53,4 @@ add_executable (olash
 )
 target_link_libraries (olash ola)
 
-set_property (TARGET olash PROPERTY INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/src/ola/)
+set_property (TARGET olash PROPERTY INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/src/ola/ ${LLVM_INCLUDE_DIRS})

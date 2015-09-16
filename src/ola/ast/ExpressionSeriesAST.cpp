@@ -4,7 +4,7 @@
 
 #include "ExpressionSeriesAST.h"
 #include "ExpressionKillerAST.h"
-#include "../compileassert.h"
+#include "../astassert.h"
 
 namespace ola {
     ExpressionSeriesAST::ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body)
@@ -25,7 +25,7 @@ namespace ola {
         while (1) {
             //if there is a close curly bracket, stop the series
             if (l.curToken() == Token::Char_closeCurlyBracket) {
-                return std::make_unique<ExpressionSeriesAST>(std::move(expressions));
+                return llvm::make_unique<ExpressionSeriesAST>(std::move(expressions));
             }
 
             //parse an expression
@@ -34,7 +34,7 @@ namespace ola {
             if (expr != nullptr) {
                 if (l.curToken() == Token::Char_semicolon) {
                     //generate an expressionkiller
-                    expressions.push_back(std::make_unique<ExpressionKillerAST>(std::move(expr)));
+                    expressions.push_back(llvm::make_unique<ExpressionKillerAST>(std::move(expr)));
                     //eat the semicolon and continue
                     l.nextToken();
                 } else if (l.curToken() == Token::Char_closeCurlyBracket) {

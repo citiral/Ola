@@ -3,7 +3,7 @@
 //
 
 #include "BinaryOperatorAST.h"
-#include "../compileassert.h"
+#include "../astassert.h"
 #include "../codegenassert.h"
 
 namespace ola {
@@ -48,7 +48,7 @@ namespace ola {
             }
 
             //merge the expressions
-            expr = std::make_unique<BinaryOperatorAST>(opp, std::move(expr), std::move(RHS));
+            expr = llvm::make_unique<BinaryOperatorAST>(opp, std::move(expr), std::move(RHS));
         }
 
         return std::move(expr);

@@ -17,7 +17,7 @@ namespace ola {
     std::unique_ptr<NumberIntegerAST> NumberIntegerAST::generate(Lexer &l) {
         i64 number = atol(l.value.string.c_str());
         l.nextToken();
-        return std::make_unique<NumberIntegerAST>(number);
+        return llvm::make_unique<NumberIntegerAST>(number);
     }
 
     llvm::Value *NumberIntegerAST::codegen(Context *c) {

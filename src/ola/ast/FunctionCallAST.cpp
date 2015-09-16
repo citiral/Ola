@@ -3,7 +3,7 @@
 //
 
 #include "FunctionCallAST.h"
-#include "../compileassert.h"
+#include "../astassert.h"
 #include "../types.h"
 #include "../codegenassert.h"
 
@@ -37,7 +37,7 @@ std::unique_ptr<ola::FunctionCallAST> ola::FunctionCallAST::generate(std::string
     //eat the close bracket
     l.nextToken();
 
-    return std::make_unique<FunctionCallAST>(functionname, std::move(args));
+    return llvm::make_unique<FunctionCallAST>(functionname, std::move(args));
 }
 
 void ola::FunctionCallAST::log(std::ostream &s) {

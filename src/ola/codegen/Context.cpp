@@ -10,7 +10,7 @@ using namespace llvm;
 namespace ola {
 
     Context::Context()
-        : module(std::make_unique<Module>("Ola", getGlobalContext())),
+        : module(llvm::make_unique<Module>("Ola", getGlobalContext())),
           builder(getGlobalContext()),
           _scope(new Scope())
     {
@@ -24,7 +24,7 @@ namespace ola {
     }
 
     void Context::pushScope() {
-        _scope = std::make_unique<Scope>(std::move(_scope));
+        _scope = llvm::make_unique<Scope>(std::move(_scope));
     }
 
     void Context::popScope() {

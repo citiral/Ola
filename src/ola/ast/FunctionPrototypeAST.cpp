@@ -4,7 +4,7 @@
 
 #include "FunctionPrototypeAST.h"
 #include "../types.h"
-#include "../compileassert.h"
+#include "../astassert.h"
 #include "../codegenassert.h"
 #include <llvm/IR/Type.h>
 #include <llvm/IR/Function.h>
@@ -72,7 +72,7 @@ namespace ola {
         } else {
             type = "void";
         }
-        return std::make_unique<FunctionPrototypeAST>(type, name, std::move(args), std::move(types));
+        return llvm::make_unique<FunctionPrototypeAST>(type, name, std::move(args), std::move(types));
     }
 
     llvm::Function* FunctionPrototypeAST::codegen(Context* c) {

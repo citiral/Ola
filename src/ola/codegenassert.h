@@ -5,6 +5,8 @@
 #ifndef OLA_CODEGENASSERT_H_H
 #define OLA_CODEGENASSERT_H_H
 
+#include <iostream>
+
 #define CODEGEN_RETURN_ERROR(message) \
 {\
     std::cout << "Error: " << message << "\n";\
