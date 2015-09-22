@@ -19,6 +19,7 @@ namespace ola {
         llvm::Function* codegen(Context* c);
 
         static std::unique_ptr<FunctionAST> generate(Lexer& l);
+
     private:
         std::unique_ptr<FunctionPrototypeAST> _prototype;
         std::unique_ptr<ExpressionSeriesAST> _body;

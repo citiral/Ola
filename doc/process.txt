@@ -1,0 +1,15 @@
+
+The compiling process works as follows:
+
+1) Tokenize the input using a hand-written lexer
+
+2) Generate an AST using those tokens. This AST holds only information handed to it from the lexer.
+As a result, most nodes do not have any type information nor do they have references to nodes that are not children,
+so functions calls have no knowledge of the actual function, etc
+
+3) Generate a decorated AST, containing type information and references to declarations.
+This happens by running over the AST depth first and bookkeeping a definitions stack and type map.
+A node can fetch the proper declaration from the namespace tree and fetch his type information from there.
+During this process, name wrangling takes place
+
+4) Generate LLVM IR code from the decorated AST

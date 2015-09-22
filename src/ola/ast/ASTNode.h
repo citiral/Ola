@@ -6,6 +6,7 @@
 #define OLA_ASTNODE_H
 
 #include <ostream>
+#include "../dast/DASTNode.h"
 
 namespace ola {
     class ASTNode {
