@@ -7,11 +7,14 @@
 
 #include "DastContext.h"
 
+#define NODE_FUNCTION_CAST(T, x) ((std::unique_ptr<T>(*)(DastContext&))x)
+
 namespace ola {
 
     class DASTNode {
     public:
         DASTNode(DastContext& dc) : _context(dc) {};
+        virtual ~DASTNode() {};
 
     protected:
         DastContext& _context;

@@ -6,6 +6,7 @@
 #include "../astassert.h"
 #include "../types.h"
 #include "../codegenassert.h"
+#include "../dast/FunctionCallDAST.h"
 
 using namespace llvm;
 
@@ -66,4 +67,12 @@ Value* ola::FunctionCallAST::codegen(ola::Context* c) {
     }
 
     return c->builder.CreateCall(func, args, _func.c_str());
+}
+
+std::unique_ptr<ola::ExpressionDAST> ola::FunctionCallAST::generateDecoratedTree(ola::DastContext& context) {
+    std::vector<std::unique_ptr<ExpressionDAST>> args;
+    for (u32 i = 0 ; i < _args.size() ; i++)
+        args.push_back(_args[i]->generateDecoratedTree(context));
+
+    return llvm::make_unique<FunctionCallDAST>(context, _func, std::move(args));
 }

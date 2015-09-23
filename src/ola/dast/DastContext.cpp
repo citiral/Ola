@@ -4,15 +4,30 @@
 
 #include "DastContext.h"
 #include <llvm/ADT/STLExtras.h>
+#include "FunctionPrototypeDAST.h"
 
-ola::DastContext::DastContext():
-	variableStack(llvm::make_unique<VariableStack>(nullptr)) {
-}
+namespace ola {
+	DastContext::DastContext() :
+			variableStack(llvm::make_unique<VariableStack>(nullptr)) {
+	}
 
-void ola::DastContext::pushVariableStack() {
-	variableStack = llvm::make_unique<VariableStack>(std::move(variableStack));
-}
+	void DastContext::pushVariableStack() {
+		variableStack = llvm::make_unique<VariableStack>(std::move(variableStack));
+	}
 
-void ola::DastContext::popVariableStack() {
-	variableStack = std::move(variableStack->getParent());
+	void DastContext::popVariableStack() {
+		variableStack = std::move(variableStack->getParent());
+	}
+
+	FunctionPrototypeDAST* DastContext::getFunction(std::string string) {
+		return _functionMap[string];
+	}
+
+	void DastContext::setFunction(std::string string, FunctionPrototypeDAST* function) {
+		_functionMap[string] = function;
+	}
+
+	void DastContext::removeFunction(std::string string) {
+		_functionMap.erase(string);
+	}
 }

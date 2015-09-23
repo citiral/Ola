@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 #include "../lexer.h"
+#include "../dast/ExpressionSeriesDAST.h"
 
 namespace ola {
     class ExpressionSeriesAST : public ExpressionAST {
@@ -22,6 +23,8 @@ namespace ola {
         static std::unique_ptr<ExpressionSeriesAST> generate(Lexer& l);
 
         std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
+        //this is ugly, but needs to be done since unique_ptrs don't support covariance
+        std::unique_ptr<ExpressionSeriesDAST> generateDecoratedTreeExpressionSeries(DastContext& context);
 
     private:
         std::vector<std::unique_ptr<ExpressionAST>> _body;

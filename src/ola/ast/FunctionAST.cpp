@@ -70,4 +70,9 @@ namespace ola {
 	    llvm::verifyFunction(*func);
 	    return func;
     }
+
+    std::unique_ptr<FunctionDAST> FunctionAST::generateDecoratedTree(DastContext& context) {
+        std::unique_ptr<ExpressionSeriesDAST> body = _body->generateDecoratedTreeExpressionSeries(context);
+        return llvm::make_unique<FunctionDAST>(context, _prototype->generateDecoratedTree(context), std::move(body));
+    }
 }

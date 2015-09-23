@@ -17,6 +17,8 @@ namespace ola {
 	public:
 		FunctionPrototypeDAST(DastContext& context, std::string name, std::string type, std::vector<std::string> args);
 
+		Type* getType();
+
 	private:
 		Type* _type;
 		std::string _name;

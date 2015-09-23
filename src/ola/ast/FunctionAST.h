@@ -8,6 +8,7 @@
 #include "ASTNode.h"
 #include "FunctionPrototypeAST.h"
 #include "ExpressionSeriesAST.h"
+#include "../dast/FunctionDAST.h"
 #include <memory>
 
 namespace ola {
@@ -17,6 +18,8 @@ namespace ola {
 
         virtual void log(std::ostream &s) override;
         llvm::Function* codegen(Context* c);
+
+        std::unique_ptr<FunctionDAST> generateDecoratedTree(DastContext& context);
 
         static std::unique_ptr<FunctionAST> generate(Lexer& l);
 

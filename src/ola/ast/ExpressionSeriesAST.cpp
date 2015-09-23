@@ -4,7 +4,6 @@
 
 #include "ExpressionSeriesAST.h"
 #include "ExpressionKillerAST.h"
-#include "../dast/ExpressionSeriesDAST.h"
 #include "../astassert.h"
 
 namespace ola {
@@ -55,6 +54,11 @@ namespace ola {
     }
 
     std::unique_ptr<ExpressionDAST> ExpressionSeriesAST::generateDecoratedTree(DastContext& context) {
+        return generateDecoratedTreeExpressionSeries(context);
+    }
+
+    std::unique_ptr<ExpressionSeriesDAST> ExpressionSeriesAST::generateDecoratedTreeExpressionSeries(
+            DastContext& context) {
         std::vector<std::unique_ptr<ExpressionDAST>> expressions;
 
         for (u32 i = 0 ; i < _body.size() ; i++)
