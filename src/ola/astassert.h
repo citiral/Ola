@@ -6,7 +6,7 @@
 #define OLA_COMPILEASSERT_H
 
 #include <iostream>
-`
+
 #define COMPILE_GENERATE_AND_RETURN_ERROR(lex, message) \
 {\
     std::cout << "Error: " << message << "\n";\

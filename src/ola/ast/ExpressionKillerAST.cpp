@@ -3,6 +3,7 @@
 //
 
 #include "ExpressionKillerAST.h"
+#include "../dast/ExpressionKillerDAST.h"
 
 using namespace llvm;
 
@@ -20,5 +21,9 @@ namespace ola {
         if (_expression)
             _expression->codegen(c);
 	    return UndefValue::get(c->builder.getVoidTy());
+    }
+
+    std::unique_ptr<ExpressionDAST> ExpressionKillerAST::generateDecoratedTree(DastContext& context) {
+        return llvm::make_unique<ExpressionKillerDAST>(context, _expression->generateDecoratedTree(context));
     }
 }

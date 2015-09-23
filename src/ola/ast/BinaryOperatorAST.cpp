@@ -5,6 +5,7 @@
 #include "BinaryOperatorAST.h"
 #include "../astassert.h"
 #include "../codegenassert.h"
+#include "../dast/BinaryOperatorDAST.h"
 
 namespace ola {
     BinaryOperatorAST::BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
@@ -84,5 +85,12 @@ namespace ola {
             return c->builder.CreateSDiv(LHS, RHS, "bindiv");
 
         CODEGEN_RETURN_ERROR("Unknown operator '" << _operator << "'");
+    }
+
+    std::unique_ptr<ExpressionDAST> BinaryOperatorAST::generateDecoratedTree(DastContext& context) {
+        return llvm::make_unique<BinaryOperatorDAST>(context,
+                                                     _leftExpression->generateDecoratedTree(context),
+                                                     _rightExpression->generateDecoratedTree(context),
+                                                     _operator);
     }
 }

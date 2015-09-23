@@ -26,6 +26,8 @@ namespace ola {
 
         static u32 getPrecendence(char opp);
 
+        std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
+
         //fully parses calculation starting from the current state of the lexer. The LHS must already have been parsed
         static std::unique_ptr<ExpressionAST> generate(Lexer& l, std::unique_ptr<ExpressionAST> LHS);
 

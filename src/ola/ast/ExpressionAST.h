@@ -11,6 +11,7 @@
 #include <llvm/IR/Value.h>
 #include "../codegen/Context.h"
 #include "../dast/ExpressionDAST.h"
+#include "../dast/DastContext.h"
 
 namespace ola {
     class ExpressionAST : public ASTNode {
@@ -24,7 +25,7 @@ namespace ola {
         static std::unique_ptr<ExpressionAST> generatePrimary(Lexer& l);
         static std::unique_ptr<ExpressionAST> generateIdentifier(Lexer& l);
 
-        virtual std::unique_ptr<ExpressionDAST> generateDecoratedTree() = 0;
+        virtual std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) = 0;
     };
 }
 

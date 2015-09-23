@@ -3,7 +3,7 @@
 //
 
 #include "NumberIntegerAST.h"
-
+#include "../dast/NumberIntegerDAST.h"
 using namespace llvm;
 
 namespace ola {
@@ -23,5 +23,10 @@ namespace ola {
     llvm::Value *NumberIntegerAST::codegen(Context *c) {
         return c->builder.getInt32(_value);
         //return ConstantInt::get(IntegerType::get(getGlobalContext(), 32), _value);
+    }
+
+    std::unique_ptr<ExpressionDAST> NumberIntegerAST::generateDecoratedTree(DastContext& context) {
+        return llvm::make_unique<NumberIntegerDAST>(context, _value);
+        return std::unique_ptr<ExpressionDAST>();
     }
 }

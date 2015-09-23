@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include <llvm/IR/Function.h>
+#include "../dast/FunctionPrototypeDAST.h"
 
 namespace ola {
 
@@ -21,6 +22,8 @@ namespace ola {
 
         virtual void log(std::ostream &s);
         llvm::Function* codegen(Context* c);
+
+        std::unique_ptr<FunctionPrototypeDAST> generateDecoratedTree(DastContext& context);
 
         //generates this node from the current state of the lexer.
         static std::unique_ptr<FunctionPrototypeAST> generate(Lexer &l);

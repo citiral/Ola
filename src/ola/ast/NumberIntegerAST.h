@@ -19,7 +19,7 @@ namespace ola {
         virtual llvm::Value* codegen(Context* c) override;
 
         static std::unique_ptr<NumberIntegerAST> generate(Lexer& l);
-
+        std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
     private:
         i32 _value;
     };

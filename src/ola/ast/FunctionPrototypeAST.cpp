@@ -98,4 +98,8 @@ namespace ola {
 
 	    return func;
     }
+
+    std::unique_ptr<FunctionPrototypeDAST> FunctionPrototypeAST::generateDecoratedTree(DastContext& context) {
+        return llvm::make_unique<FunctionPrototypeDAST>(context, _name, _type, _args);
+    }
 }

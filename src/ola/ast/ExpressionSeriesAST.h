@@ -21,6 +21,8 @@ namespace ola {
 
         static std::unique_ptr<ExpressionSeriesAST> generate(Lexer& l);
 
+        std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
+
     private:
         std::vector<std::unique_ptr<ExpressionAST>> _body;
     };
