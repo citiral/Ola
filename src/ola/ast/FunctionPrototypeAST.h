@@ -17,6 +17,7 @@ namespace ola {
 
     class FunctionPrototypeAST : public ASTNode {
     public:
+        NODE_VISITOR_FUNCTIONS
         FunctionPrototypeAST(std::string type, std::string name, std::vector<std::string> args,
                              std::vector<std::string> types);
 

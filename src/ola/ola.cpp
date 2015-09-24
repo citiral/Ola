@@ -4,7 +4,6 @@
 #include <iostream>
 #include "astassert.h"
 
-
 namespace ola {
 
     OlaToLlvmCompiler::OlaToLlvmCompiler()
@@ -50,12 +49,10 @@ namespace ola {
             }
         }
 
-        //then, generate the dast
-        std::vector<std::unique_ptr<DASTNode>> dastRoot;
-        DastContext dc;
-
+        //first, we do the type pass
+        TypePass pass;
         for (u32 i = 0 ; i < astRoot.size() ; i++) {
-            
+            astRoot[i]->visit(pass);
         }
     }
 

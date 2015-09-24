@@ -63,4 +63,8 @@ namespace ola {
 
         return llvm::make_unique<ExpressionSeriesDAST>(context, std::move(expressions));
     }
+
+    Type* ExpressionSeriesAST::getType() {
+        return (*_body.end())->getType();
+    }
 }

@@ -24,4 +24,8 @@ namespace ola {
     std::unique_ptr<ExpressionDAST> ExpressionKillerAST::generateDecoratedTreeExpression(DastContext& context) {
         return llvm::make_unique<ExpressionKillerDAST>(context, _expression->generateDecoratedTreeExpression(context));
     }
+
+    Type* ExpressionKillerAST::getType() {
+        return _type;
+    }
 }

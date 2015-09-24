@@ -75,4 +75,8 @@ namespace ola {
                                                      _rightExpression->generateDecoratedTreeExpression(context),
                                                      _operator);
     }
+
+    Type* BinaryOperatorAST::getType() {
+        return _type;
+    }
 }

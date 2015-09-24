@@ -16,7 +16,10 @@
 namespace ola {
     class ExpressionAST : public ASTNode {
     public:
+        NODE_VISITOR_FUNCTIONS
         virtual ~ExpressionAST();
+
+        virtual Type* getType() = 0;
 
         static std::unique_ptr<ExpressionAST> generate(Lexer& l);
         static std::unique_ptr<ExpressionAST> generatePrimary(Lexer& l);

@@ -63,3 +63,7 @@ std::unique_ptr<ola::ExpressionDAST> ola::FunctionCallAST::generateDecoratedTree
 
     return llvm::make_unique<FunctionCallDAST>(context, _func, std::move(args));
 }
+
+ola::Type* ola::FunctionCallAST::getType() {
+    return _type;
+}

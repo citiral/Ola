@@ -14,6 +14,7 @@
 namespace ola {
     class FunctionAST : public ASTNode {
     public:
+        NODE_VISITOR_FUNCTIONS
         FunctionAST(std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionSeriesAST> body);
 
         virtual void log(std::ostream &s) override;

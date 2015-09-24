@@ -21,4 +21,8 @@ namespace ola {
     std::unique_ptr<ExpressionDAST> VariableAST::generateDecoratedTreeExpression(DastContext& context) {
         return llvm::make_unique<VariableDAST>(context, _name);
     }
+
+    Type* VariableAST::getType() {
+        return _type;
+    }
 }

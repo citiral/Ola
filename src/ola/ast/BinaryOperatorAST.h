@@ -18,6 +18,7 @@
 namespace ola {
     class BinaryOperatorAST : public ExpressionAST {
     public:
+        NODE_VISITOR_FUNCTIONS
         BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
                           std::unique_ptr<ExpressionAST> rightExpression);
 
@@ -31,7 +32,10 @@ namespace ola {
         //fully parses calculation starting from the current state of the lexer. The LHS must already have been parsed
         static std::unique_ptr<ExpressionAST> generate(Lexer& l, std::unique_ptr<ExpressionAST> LHS);
 
+        Type* getType() override;
+
     private:
+        Type* _type;
         char _operator;
         std::unique_ptr<ExpressionAST> _leftExpression;
         std::unique_ptr<ExpressionAST> _rightExpression;

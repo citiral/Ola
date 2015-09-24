@@ -13,6 +13,7 @@
 namespace ola {
     class NumberIntegerAST : public ExpressionAST {
     public:
+        NODE_VISITOR_FUNCTIONS
         NumberIntegerAST(i32 value);
 
         void log(std::ostream &s) override;
@@ -22,7 +23,10 @@ namespace ola {
         std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
         std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
 
+        Type* getType() override;
+
     private:
+        Type* _type;
         i32 _value;
     };
 }

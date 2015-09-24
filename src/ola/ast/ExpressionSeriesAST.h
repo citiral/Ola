@@ -15,6 +15,7 @@
 namespace ola {
     class ExpressionSeriesAST : public ExpressionAST {
     public:
+        NODE_VISITOR_FUNCTIONS
         ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body);
 
         virtual void log(std::ostream &s) override;
@@ -25,7 +26,9 @@ namespace ola {
         std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
         std::unique_ptr<ExpressionSeriesDAST> generateDecoratedTreeExpressionSeries(DastContext& context);
 
+        Type* getType() override;
     private:
+        Type* _type;
         std::vector<std::unique_ptr<ExpressionAST>> _body;
     };
 }

@@ -11,6 +11,7 @@ namespace ola {
 
     class FunctionCallAST : public ExpressionAST {
     public:
+        NODE_VISITOR_FUNCTIONS
         FunctionCallAST(std::string func, std::vector<std::unique_ptr<ExpressionAST>> args);
 
         virtual void log(std::ostream &s) override;
@@ -20,7 +21,10 @@ namespace ola {
 
         //generates a functioncallast from the current state of the lexer. The functionname must already be parsed
         static std::unique_ptr<FunctionCallAST> generate(std::string functionname, Lexer& l);
+
+        Type* getType() override;
     private:
+        Type* _type;
         std::string _func;
         std::vector<std::unique_ptr<ExpressionAST>> _args;
     };

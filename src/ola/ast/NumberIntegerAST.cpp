@@ -27,4 +27,8 @@ namespace ola {
     std::unique_ptr<ExpressionDAST> NumberIntegerAST::generateDecoratedTreeExpression(DastContext& context) {
         return llvm::make_unique<NumberIntegerDAST>(context, _value);
     }
+
+    Type* NumberIntegerAST::getType() {
+        return _type;
+    }
 }
