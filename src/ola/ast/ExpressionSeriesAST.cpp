@@ -46,14 +46,11 @@ namespace ola {
         }
     }
 
-    llvm::Value* ExpressionSeriesAST::codegen(Context* c) {
-        llvm::Value* last = nullptr;
-        for (u32 i = 0 ; i < _body.size() ; i++)
-            last = _body[i]->codegen(c);
-        return last;
+    std::unique_ptr<DASTNode> ExpressionSeriesAST::generateDecoratedTree(DastContext& context) {
+        return generateDecoratedTreeExpression(context);
     }
 
-    std::unique_ptr<ExpressionDAST> ExpressionSeriesAST::generateDecoratedTree(DastContext& context) {
+    std::unique_ptr<ExpressionDAST> ExpressionSeriesAST::generateDecoratedTreeExpression(DastContext& context) {
         return generateDecoratedTreeExpressionSeries(context);
     }
 
@@ -62,7 +59,7 @@ namespace ola {
         std::vector<std::unique_ptr<ExpressionDAST>> expressions;
 
         for (u32 i = 0 ; i < _body.size() ; i++)
-            expressions.push_back(std::move(_body[i]->generateDecoratedTree(context)));
+            expressions.push_back(std::move(_body[i]->generateDecoratedTreeExpression(context)));
 
         return llvm::make_unique<ExpressionSeriesDAST>(context, std::move(expressions));
     }

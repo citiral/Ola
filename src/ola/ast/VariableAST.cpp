@@ -14,13 +14,11 @@ namespace ola {
         s << "var: " << _name;
     }
 
-    llvm::Value* VariableAST::codegen(Context *c) {
-        llvm::Value* value = c->getScope()->getVariable(_name);
-        CODEGEN_ASSERT(value != nullptr, "Undefined variable " << _name);
-        return value;
+    std::unique_ptr<DASTNode> VariableAST::generateDecoratedTree(DastContext& context) {
+        return generateDecoratedTreeExpression(context);
     }
 
-    std::unique_ptr<ExpressionDAST> VariableAST::generateDecoratedTree(DastContext& context) {
+    std::unique_ptr<ExpressionDAST> VariableAST::generateDecoratedTreeExpression(DastContext& context) {
         return llvm::make_unique<VariableDAST>(context, _name);
     }
 }

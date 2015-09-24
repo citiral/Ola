@@ -3,13 +3,23 @@
 //
 
 #include "ExpressionSeriesDAST.h"
+#include "../types.h"
 
-ola::ExpressionSeriesDAST::ExpressionSeriesDAST(ola::DastContext& dt,
-                                                std::vector<std::unique_ptr<ola::ExpressionDAST>> body):
-    ExpressionDAST(dt),
-    _body(std::move(body)) {
-}
+namespace ola {
+    ExpressionSeriesDAST::ExpressionSeriesDAST(DastContext& dt,
+                                                    std::vector<std::unique_ptr<ola::ExpressionDAST>> body):
+        ExpressionDAST(dt),
+        _body(std::move(body)) {
+    }
 
-ola::Type* ola::ExpressionSeriesDAST::getType() {
-    return _body[_body.size()-1]->getType();
+    Type* ola::ExpressionSeriesDAST::getType() {
+        return _body[_body.size()-1]->getType();
+    }
+
+    llvm::Value* ExpressionSeriesDAST::codegen(Context* c) {
+        llvm::Value* last = nullptr;
+        for (u32 i = 0 ; i < _body.size() ; i++)
+            last = _body[i]->codegen(c);
+        return last;
+    }
 }

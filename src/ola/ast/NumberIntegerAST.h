@@ -16,10 +16,12 @@ namespace ola {
         NumberIntegerAST(i32 value);
 
         void log(std::ostream &s) override;
-        virtual llvm::Value* codegen(Context* c) override;
 
         static std::unique_ptr<NumberIntegerAST> generate(Lexer& l);
-        std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
+
+        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
+
     private:
         i32 _value;
     };

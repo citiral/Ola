@@ -22,4 +22,19 @@ namespace ola{
     TypeType PrimitiveType::getType() {
         return _type;
     }
+
+    llvm::Type* PrimitiveType::getLlvmType(llvm::IRBuilder<>* builder) {
+        if (_type == TypeType::PRIMITIVE_I16)
+            return builder->getInt16Ty();
+        if (_type == TypeType::PRIMITIVE_I32)
+            return builder->getInt32Ty();
+        if (_type == TypeType::PRIMITIVE_I64)
+            return builder->getInt64Ty();
+        if (_type == TypeType::PRIMITIVE_F32)
+            return builder->getFloatTy();
+        if (_type == TypeType::PRIMITIVE_F64)
+            return builder->getDoubleTy();
+        else
+            return nullptr;
+    }
 }

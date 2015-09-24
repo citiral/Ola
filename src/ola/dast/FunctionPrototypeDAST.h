@@ -9,7 +9,8 @@
 #include "../type/Type.h"
 #include <string>
 #include <vector>
-
+#include <llvm/IR/Function.h>
+#include "../codegen/Context.h"
 
 namespace ola {
 
@@ -18,6 +19,8 @@ namespace ola {
 		FunctionPrototypeDAST(DastContext& context, std::string name, std::string type, std::vector<std::string> args);
 
 		Type* getType();
+
+		llvm::Function* codegen(Context* c);
 
 	private:
 		Type* _type;

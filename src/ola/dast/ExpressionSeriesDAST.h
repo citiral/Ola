@@ -15,6 +15,8 @@ namespace ola {
         ExpressionSeriesDAST(DastContext& dt, std::vector<std::unique_ptr<ExpressionDAST>> body);
         Type* getType() override;
 
+        virtual llvm::Value* codegen(Context* c) override;
+
     private:
         std::vector <std::unique_ptr<ExpressionDAST>> _body;
     };

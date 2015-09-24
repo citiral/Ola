@@ -6,6 +6,9 @@
 #define OLA_VARIABLEDAST_H
 
 #include "../dast/ExpressionDAST.h"
+#include <llvm/IR/Value.h>
+#include "../codegen/Context.h"
+#include "../codegenassert.h"
 
 namespace ola {
 
@@ -13,6 +16,7 @@ class VariableDAST : public ExpressionDAST {
 public:
 	VariableDAST(DastContext& dc, std::string name);
 	Type* getType() override;
+	virtual llvm::Value* codegen(Context* c) override;
 
 private:
 	Type* _type;

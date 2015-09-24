@@ -18,12 +18,11 @@ namespace ola {
         ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body);
 
         virtual void log(std::ostream &s) override;
-        virtual llvm::Value* codegen(Context* c) override;
 
         static std::unique_ptr<ExpressionSeriesAST> generate(Lexer& l);
 
-        std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
-        //this is ugly, but needs to be done since unique_ptrs don't support covariance
+        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
         std::unique_ptr<ExpressionSeriesDAST> generateDecoratedTreeExpressionSeries(DastContext& context);
 
     private:

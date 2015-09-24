@@ -52,27 +52,14 @@ void ola::FunctionCallAST::log(std::ostream &s) {
     s << ")";
 }
 
-Value* ola::FunctionCallAST::codegen(ola::Context* c) {
-    llvm::Function* func = c->getScope()->getFunction(_func);
-    CODEGEN_ASSERT(func != nullptr, "Undefined function " << _func);
-    std::vector<llvm::Value*> args;
-    for (u32 i = 0 ; i < _args.size() ; i++) {
-        args.push_back(_args[i]->codegen(c));
-        //the argument needs to be valid
-        if (args.back() == nullptr)
-            return nullptr;
-        //check if the type is valid
-        CODEGEN_ASSERT(func->getFunctionType()->params()[i] == args.back()->getType(), "Invalid type in function call. Expected " << func->getFunctionType()->params()[i] << " got " << args.back()->getType());
-
-    }
-
-    return c->builder.CreateCall(func, args, _func.c_str());
+std::unique_ptr<ola::DASTNode> ola::FunctionCallAST::generateDecoratedTree(ola::DastContext& context) {
+    return generateDecoratedTreeExpression(context);
 }
 
-std::unique_ptr<ola::ExpressionDAST> ola::FunctionCallAST::generateDecoratedTree(ola::DastContext& context) {
+std::unique_ptr<ola::ExpressionDAST> ola::FunctionCallAST::generateDecoratedTreeExpression(ola::DastContext& context) {
     std::vector<std::unique_ptr<ExpressionDAST>> args;
     for (u32 i = 0 ; i < _args.size() ; i++)
-        args.push_back(_args[i]->generateDecoratedTree(context));
+        args.push_back(_args[i]->generateDecoratedTreeExpression(context));
 
     return llvm::make_unique<FunctionCallDAST>(context, _func, std::move(args));
 }

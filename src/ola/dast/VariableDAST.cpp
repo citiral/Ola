@@ -4,12 +4,22 @@
 
 #include "VariableDAST.h"
 
-ola::VariableDAST::VariableDAST(ola::DastContext& dc, std::string name):
-	ExpressionDAST(dc),
-	_name(name) {
-	_type = dc.variableStack->getVariable(_name);
-}
+namespace ola {
 
-ola::Type* ola::VariableDAST::getType() {
-	return _type;
+	VariableDAST::VariableDAST(ola::DastContext& dc, std::string name) :
+			ExpressionDAST(dc),
+			_name(name) {
+		_type = dc.variableStack->getVariable(_name);
+	}
+
+	Type* ola::VariableDAST::getType() {
+		return _type;
+	}
+
+	llvm::Value* VariableDAST::codegen(Context* c) {
+		llvm::Value* value = c->getScope()->getVariable(_name);
+		CODEGEN_ASSERT(value != nullptr, "Undefined variable " << _name);
+		return value;
+	}
+
 }

@@ -7,12 +7,16 @@
 
 #include "ExpressionDAST.h"
 #include <memory>
+#include "../codegen/Context.h"
+#include "../codegenassert.h"
 
 namespace ola {
     class BinaryOperatorDAST : public ExpressionDAST {
     public:
         BinaryOperatorDAST(DastContext& dt, std::unique_ptr<ExpressionDAST> lhs, std::unique_ptr<ExpressionDAST> rhs, char opp);
         Type* getType();
+
+        virtual llvm::Value* codegen(Context* c) override;
 
     private:
         //the returning type of the operator

@@ -20,13 +20,11 @@ namespace ola {
         return llvm::make_unique<NumberIntegerAST>(number);
     }
 
-    llvm::Value *NumberIntegerAST::codegen(Context *c) {
-        return c->builder.getInt32(_value);
-        //return ConstantInt::get(IntegerType::get(getGlobalContext(), 32), _value);
+    std::unique_ptr<DASTNode> NumberIntegerAST::generateDecoratedTree(DastContext& context) {
+        return generateDecoratedTreeExpression(context);
     }
 
-    std::unique_ptr<ExpressionDAST> NumberIntegerAST::generateDecoratedTree(DastContext& context) {
+    std::unique_ptr<ExpressionDAST> NumberIntegerAST::generateDecoratedTreeExpression(DastContext& context) {
         return llvm::make_unique<NumberIntegerDAST>(context, _value);
-        return std::unique_ptr<ExpressionDAST>();
     }
 }

@@ -22,11 +22,11 @@ namespace ola {
                           std::unique_ptr<ExpressionAST> rightExpression);
 
         void log(std::ostream &s) override;
-        virtual llvm::Value* codegen(Context* c) override;
 
         static u32 getPrecendence(char opp);
 
-        std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
 
         //fully parses calculation starting from the current state of the lexer. The LHS must already have been parsed
         static std::unique_ptr<ExpressionAST> generate(Lexer& l, std::unique_ptr<ExpressionAST> LHS);

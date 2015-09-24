@@ -17,13 +17,11 @@ namespace ola {
         s << ";";
     }
 
-    Value* ExpressionKillerAST::codegen(Context* c) {
-        if (_expression)
-            _expression->codegen(c);
-	    return UndefValue::get(c->builder.getVoidTy());
+    std::unique_ptr<DASTNode> ExpressionKillerAST::generateDecoratedTree(DastContext& context) {
+        return generateDecoratedTreeExpression(context);
     }
 
-    std::unique_ptr<ExpressionDAST> ExpressionKillerAST::generateDecoratedTree(DastContext& context) {
-        return llvm::make_unique<ExpressionKillerDAST>(context, _expression->generateDecoratedTree(context));
+    std::unique_ptr<ExpressionDAST> ExpressionKillerAST::generateDecoratedTreeExpression(DastContext& context) {
+        return llvm::make_unique<ExpressionKillerDAST>(context, _expression->generateDecoratedTreeExpression(context));
     }
 }

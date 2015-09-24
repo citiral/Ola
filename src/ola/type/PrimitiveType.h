@@ -12,6 +12,7 @@ namespace ola {
     public:
         PrimitiveType(TypeType primitiveType, std::string name);
         virtual TypeType getType();
+        llvm::Type* getLlvmType(llvm::IRBuilder<>* builder) override;
 
         bool equals(Type* t) override;
     private:

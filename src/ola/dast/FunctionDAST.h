@@ -15,6 +15,7 @@ namespace ola {
     public:
         FunctionDAST(DastContext&, std::unique_ptr<FunctionPrototypeDAST> prototype, std::unique_ptr<ExpressionSeriesDAST> body);
 
+        llvm::Function* codegen(Context* c);
     private:
         std::unique_ptr<FunctionPrototypeDAST> _prototype;
         std::unique_ptr<ExpressionSeriesDAST> _body;

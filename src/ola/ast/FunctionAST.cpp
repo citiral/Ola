@@ -32,47 +32,12 @@ namespace ola {
         return llvm::make_unique<FunctionAST>(std::move(prototype), std::move(body));
     }
 
-    llvm::Function* FunctionAST::codegen(Context* c) {
-	    //TODO extern functions
-	    //TODO erase invalid functions
-
-		//get the function from the prototype
-	    llvm::Function* func = _prototype->codegen(c);
-
-	    if (func == nullptr)
-		    return nullptr;
-
-	    //create the base building block to insert code into
-	    llvm::BasicBlock* BB = llvm::BasicBlock::Create(llvm::getGlobalContext(), "funcentry", func);
-	    c->builder.SetInsertPoint(BB);
-
-	    //push a new scope onto the stack
-	    c->pushScope();
-
-	    // Record the function arguments in the NamedValues map.
-	    for (auto &Arg : func->args()) {
-		    std::cout << "adding var " << Arg.getName().str() << "\n";
-		    c->getScope()->addVariable(Arg.getName(), &Arg);
-	    }
-
-	    //codegen the body
-	    auto code = _body->codegen(c);
-
-	    //if the body is invalid, abort
-	    if (code == nullptr) {
-		    return nullptr;
-	    }
-
-	    //return the body
-	    c->builder.CreateRet(code);
-
-	    //validate and return
-	    llvm::verifyFunction(*func);
-	    return func;
+    std::unique_ptr<DASTNode> FunctionAST::generateDecoratedTree(DastContext& context) {
+        return generateDecoratedTreeFunction(context);
     }
 
-    std::unique_ptr<FunctionDAST> FunctionAST::generateDecoratedTree(DastContext& context) {
+    std::unique_ptr<FunctionDAST> FunctionAST::generateDecoratedTreeFunction(DastContext& context) {
         std::unique_ptr<ExpressionSeriesDAST> body = _body->generateDecoratedTreeExpressionSeries(context);
-        return llvm::make_unique<FunctionDAST>(context, _prototype->generateDecoratedTree(context), std::move(body));
+        return llvm::make_unique<FunctionDAST>(context, _prototype->generateDecoratedTreeFunctionPrototype(context), std::move(body));
     }
 }

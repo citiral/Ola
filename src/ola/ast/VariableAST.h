@@ -13,9 +13,9 @@ namespace ola {
         VariableAST(std::string name);
 
         virtual void log(std::ostream &s);
-        virtual llvm::Value* codegen(Context* c) override;
 
-        std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
 
     private:
         std::string _name;

@@ -14,6 +14,8 @@ namespace ola {
         virtual ~ASTNode() { };
 
         virtual void log(std::ostream &s) = 0;
+
+        virtual std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) = 0;
     };
 }
 

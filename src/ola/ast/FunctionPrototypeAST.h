@@ -21,9 +21,9 @@ namespace ola {
                              std::vector<std::string> types);
 
         virtual void log(std::ostream &s);
-        llvm::Function* codegen(Context* c);
 
-        std::unique_ptr<FunctionPrototypeDAST> generateDecoratedTree(DastContext& context);
+        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<FunctionPrototypeDAST> generateDecoratedTreeFunctionPrototype(DastContext& context);
 
         //generates this node from the current state of the lexer.
         static std::unique_ptr<FunctionPrototypeAST> generate(Lexer &l);

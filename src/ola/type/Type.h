@@ -7,7 +7,8 @@
 
 #include <string>
 #include <functional>
-
+#include <llvm/IR/Type.h>
+#include <llvm/IR/IRBuilder.h>
 
 namespace ola {
 
@@ -28,8 +29,9 @@ namespace ola {
     public:
         virtual ~Type() {};
         virtual TypeType getType() = 0;
-
         virtual bool equals(Type* t) = 0;
+        virtual llvm::Type* getLlvmType(llvm::IRBuilder<>* builder) = 0;
+
     private:
         virtual bool equals_handle(PrimitiveType* t) = 0;
     };

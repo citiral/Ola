@@ -17,9 +17,9 @@ namespace ola {
         FunctionAST(std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionSeriesAST> body);
 
         virtual void log(std::ostream &s) override;
-        llvm::Function* codegen(Context* c);
 
-        std::unique_ptr<FunctionDAST> generateDecoratedTree(DastContext& context);
+        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<FunctionDAST> generateDecoratedTreeFunction(DastContext& context);
 
         static std::unique_ptr<FunctionAST> generate(Lexer& l);
 

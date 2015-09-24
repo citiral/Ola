@@ -8,7 +8,6 @@
 #include "BinaryOperatorAST.h"
 #include "VariableAST.h"
 #include "FunctionCallAST.h"
-#include "llvm/ADT/STLExtras.h"
 
 namespace ola {
     ExpressionAST::~ExpressionAST() {
@@ -25,7 +24,6 @@ namespace ola {
 
         return LHS;
     }
-
 
     std::unique_ptr<ExpressionAST> ExpressionAST::generatePrimary(Lexer &l) {
         switch (l.curToken()) {
@@ -60,4 +58,5 @@ namespace ola {
         //otherwise, we just return it as a variable ast
         return llvm::make_unique<VariableAST>(identifiername);
     }
+
 }

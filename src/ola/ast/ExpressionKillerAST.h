@@ -15,9 +15,9 @@ namespace ola {
         ExpressionKillerAST(std::unique_ptr<ExpressionAST> expression);
 
         virtual void log(std::ostream &s) override;
-        virtual llvm::Value* codegen(Context* c) override;
 
-        std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
     private:
         std::unique_ptr<ExpressionAST> _expression;
     };

@@ -8,6 +8,8 @@
 #include <vector>
 #include "ExpressionDAST.h"
 #include "FunctionPrototypeDAST.h"
+#include "../codegenassert.h"
+#include "../types.h"
 
 namespace ola {
 
@@ -16,6 +18,8 @@ namespace ola {
         FunctionCallDAST(DastContext& context, std::string name, std::vector<std::unique_ptr<ExpressionDAST>> args);
 
         Type* getType() override;
+
+        virtual llvm::Value* codegen(Context* c) override;
 
     private:
         Type* _type;

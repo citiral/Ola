@@ -75,31 +75,12 @@ namespace ola {
         return llvm::make_unique<FunctionPrototypeAST>(type, name, std::move(args), std::move(types));
     }
 
-    llvm::Function* FunctionPrototypeAST::codegen(Context* c) {
-        std::vector<llvm::Type*> types;
-
-        //first, parse all the types
-        for (u32 i = 0 ; i < _types.size() ; i++) {
-            llvm::Type* t = c->getType(_types[i]);
-            CODEGEN_ASSERT(t != nullptr, "Unknown type " << _types[i]);
-	        types.push_back(t);
-        }
-
-	    llvm::FunctionType* funcType = llvm::FunctionType::get(c->getType(_type), types, false);
-	    llvm::Function* func = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, _name, c->module.get());
-
-	    u32 i = 0;
-	    for (auto& arg : func->args()) {
-			arg.setName(_args[i++]);
-	    }
-
-	    //insert the function into the context
-	    c->getScope()->addFunction(_name, func);
-
-	    return func;
+    std::unique_ptr<DASTNode> FunctionPrototypeAST::generateDecoratedTree(DastContext& context) {
+        return generateDecoratedTreeFunctionPrototype(context);
     }
 
-    std::unique_ptr<FunctionPrototypeDAST> FunctionPrototypeAST::generateDecoratedTree(DastContext& context) {
+    std::unique_ptr<FunctionPrototypeDAST> FunctionPrototypeAST::generateDecoratedTreeFunctionPrototype(
+            DastContext& context) {
         return llvm::make_unique<FunctionPrototypeDAST>(context, _name, _type, _args);
     }
 }

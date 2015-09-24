@@ -14,6 +14,8 @@ namespace ola {
     public:
         NumberIntegerDAST(DastContext& dt, i32 value);
         Type* getType() override;
+
+        virtual llvm::Value* codegen(Context* c) override;
     private:
         i32 _value;
     };

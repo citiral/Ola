@@ -14,6 +14,8 @@ namespace ola {
         ExpressionKillerDAST(DastContext& dt, std::unique_ptr<ExpressionDAST> expression);
         virtual Type* getType();
 
+        virtual llvm::Value* codegen(Context* c) override;
+
     private:
         std::unique_ptr<ExpressionDAST> _expression;
     };

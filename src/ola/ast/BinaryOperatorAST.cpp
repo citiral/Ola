@@ -65,32 +65,14 @@ namespace ola {
         s << ")";
     }
 
-    llvm::Value* BinaryOperatorAST::codegen(Context* c) {
-        //first codegen both arms
-        auto LHS = _leftExpression->codegen(c);
-        auto RHS = _rightExpression->codegen(c);
-
-        if (!LHS || !RHS)
-            return nullptr;
-
-        CODEGEN_ASSERT(LHS->getType() == RHS->getType(), "Types in binary operation should be equal.");
-
-        if (_operator == '+')
-            return c->builder.CreateAdd(LHS, RHS, "binadd");
-        if (_operator == '-')
-            return c->builder.CreateSub(LHS, RHS, "binsub");
-        if (_operator == '*')
-            return c->builder.CreateMul(LHS, RHS, "binmul");
-        if (_operator == '/')
-            return c->builder.CreateSDiv(LHS, RHS, "bindiv");
-
-        CODEGEN_RETURN_ERROR("Unknown operator '" << _operator << "'");
+    std::unique_ptr<DASTNode> BinaryOperatorAST::generateDecoratedTree(DastContext& context) {
+        return generateDecoratedTreeExpression(context);
     }
 
-    std::unique_ptr<ExpressionDAST> BinaryOperatorAST::generateDecoratedTree(DastContext& context) {
+    std::unique_ptr<ExpressionDAST> BinaryOperatorAST::generateDecoratedTreeExpression(DastContext& context) {
         return llvm::make_unique<BinaryOperatorDAST>(context,
-                                                     _leftExpression->generateDecoratedTree(context),
-                                                     _rightExpression->generateDecoratedTree(context),
+                                                     _leftExpression->generateDecoratedTreeExpression(context),
+                                                     _rightExpression->generateDecoratedTreeExpression(context),
                                                      _operator);
     }
 }

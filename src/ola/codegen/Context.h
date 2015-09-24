@@ -29,8 +29,8 @@ namespace ola {
         /*********************************\
         *type related functions          *
         \*********************************/
-        llvm::Type* getType(std::string name);
-        llvm::Type* getPrimitiveType(std::string name);
+        //llvm::Type* getType(std::string name);
+        //llvm::Type* getPrimitiveType(std::string name);
 
         std::unique_ptr<llvm::Module> module;
         llvm::IRBuilder<> builder;

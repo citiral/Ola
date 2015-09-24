@@ -14,9 +14,9 @@ namespace ola {
         FunctionCallAST(std::string func, std::vector<std::unique_ptr<ExpressionAST>> args);
 
         virtual void log(std::ostream &s) override;
-        virtual llvm::Value* codegen(Context* c) override;
 
-        std::unique_ptr<ExpressionDAST> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
+        std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
 
         //generates a functioncallast from the current state of the lexer. The functionname must already be parsed
         static std::unique_ptr<FunctionCallAST> generate(std::string functionname, Lexer& l);

@@ -31,6 +31,9 @@ namespace ola {
         //get the first token
         _lexer.nextToken();
 
+        //first, generate the AST
+        std::vector<std::unique_ptr<ASTNode>> astRoot;
+
         //keep looping untill we are out of tokens
         while (!_lexer.atEndOfBuffer()) {
             //try to delegate the token to the correct compile function
@@ -40,19 +43,29 @@ namespace ola {
                     std::cout << "successfully parsed program\n";
                     return;
                 default:
-                    compileBlock()->log(std::cout);
+                    auto elem = compileBlock();
+                    elem->log(std::cout);
+                    astRoot.push_back(std::move(elem));
                     break;
             }
+        }
+
+        //then, generate the dast
+        std::vector<std::unique_ptr<DASTNode>> dastRoot;
+        DastContext dc;
+
+        for (u32 i = 0 ; i < astRoot.size() ; i++) {
+            
         }
     }
 
     std::unique_ptr<ASTNode> OlaToLlvmCompiler::compileBlock() {
+
         switch (_lexer.curToken()) {
             case Token::Function: {
                 auto f = FunctionAST::generate(_lexer);
                 return std::move(f);
-            }
-            default:
+            } default:
                 COMPILE_GENERATE_AND_RETURN_ERROR(_lexer, "Unknown token in block.");
         }
     }
