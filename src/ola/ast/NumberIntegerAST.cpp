@@ -20,15 +20,11 @@ namespace ola {
         return llvm::make_unique<NumberIntegerAST>(number);
     }
 
-    std::unique_ptr<DASTNode> NumberIntegerAST::generateDecoratedTree(DastContext& context) {
-        return generateDecoratedTreeExpression(context);
-    }
-
-    std::unique_ptr<ExpressionDAST> NumberIntegerAST::generateDecoratedTreeExpression(DastContext& context) {
-        return llvm::make_unique<NumberIntegerDAST>(context, _value);
-    }
-
     Type* NumberIntegerAST::getType() {
         return _type;
+    }
+
+    void NumberIntegerAST::setType(Type* type) {
+        _type = type;
     }
 }

@@ -29,5 +29,4 @@ private:
 	Lexer _lexer;
 };
 
-
 }

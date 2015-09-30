@@ -14,15 +14,15 @@ namespace ola {
         s << "var: " << _name;
     }
 
-    std::unique_ptr<DASTNode> VariableAST::generateDecoratedTree(DastContext& context) {
-        return generateDecoratedTreeExpression(context);
-    }
-
-    std::unique_ptr<ExpressionDAST> VariableAST::generateDecoratedTreeExpression(DastContext& context) {
-        return llvm::make_unique<VariableDAST>(context, _name);
-    }
-
     Type* VariableAST::getType() {
         return _type;
+    }
+
+    void VariableAST::setType(Type* type) {
+        _type = type;
+    }
+
+    std::string VariableAST::getName() {
+        return _name;
     }
 }

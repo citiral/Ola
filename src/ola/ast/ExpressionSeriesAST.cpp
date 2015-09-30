@@ -46,25 +46,15 @@ namespace ola {
         }
     }
 
-    std::unique_ptr<DASTNode> ExpressionSeriesAST::generateDecoratedTree(DastContext& context) {
-        return generateDecoratedTreeExpression(context);
-    }
-
-    std::unique_ptr<ExpressionDAST> ExpressionSeriesAST::generateDecoratedTreeExpression(DastContext& context) {
-        return generateDecoratedTreeExpressionSeries(context);
-    }
-
-    std::unique_ptr<ExpressionSeriesDAST> ExpressionSeriesAST::generateDecoratedTreeExpressionSeries(
-            DastContext& context) {
-        std::vector<std::unique_ptr<ExpressionDAST>> expressions;
-
-        for (u32 i = 0 ; i < _body.size() ; i++)
-            expressions.push_back(std::move(_body[i]->generateDecoratedTreeExpression(context)));
-
-        return llvm::make_unique<ExpressionSeriesDAST>(context, std::move(expressions));
-    }
-
     Type* ExpressionSeriesAST::getType() {
         return (*_body.end())->getType();
+    }
+
+    void ExpressionSeriesAST::setType(Type* type) {
+        _type = type;
+    }
+
+    std::vector<std::unique_ptr<ExpressionAST>>* ExpressionSeriesAST::getBody() {
+        return &_body;
     }
 }

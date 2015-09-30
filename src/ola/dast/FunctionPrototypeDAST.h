@@ -23,11 +23,9 @@ namespace ola {
 		llvm::Function* codegen(Context* c);
 
 	private:
-		Type* _type;
 		std::string _name;
 
 		std::vector<std::string> _args;
-		std::vector<Type*> _types;
 	};
 
 }

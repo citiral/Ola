@@ -23,7 +23,7 @@ namespace ola {
 		return _functionMap[string];
 	}
 
-	void DastContext::setFunction(std::string string, FunctionPrototypeDAST* function) {
+	void DastContext::setFunction(std::string string, FunctionPrototypeAST* function) {
 		_functionMap[string] = function;
 	}
 

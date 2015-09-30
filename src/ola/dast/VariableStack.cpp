@@ -21,7 +21,12 @@ namespace ola {
 	}
 
 	Type* VariableStack::getVariable(std::string name) {
-		return _variables[name];
+		if (_variables.find(name) != _variables.end)
+			return _variables[name];
+		else if (_parent != nullptr) {
+			return _parent->getVariable(name);
+		}
+		return nullptr;
 	}
 
 	void VariableStack::setVariable(std::string name, Type* type) {

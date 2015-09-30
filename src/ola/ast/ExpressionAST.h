@@ -24,9 +24,6 @@ namespace ola {
         static std::unique_ptr<ExpressionAST> generate(Lexer& l);
         static std::unique_ptr<ExpressionAST> generatePrimary(Lexer& l);
         static std::unique_ptr<ExpressionAST> generateIdentifier(Lexer& l);
-
-        virtual std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) = 0;
-        virtual std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) = 0;
     };
 }
 

@@ -32,12 +32,11 @@ namespace ola {
         return llvm::make_unique<FunctionAST>(std::move(prototype), std::move(body));
     }
 
-    std::unique_ptr<DASTNode> FunctionAST::generateDecoratedTree(DastContext& context) {
-        return generateDecoratedTreeFunction(context);
+    FunctionPrototypeAST* FunctionAST::getPrototype() {
+        return _prototype.get();
     }
 
-    std::unique_ptr<FunctionDAST> FunctionAST::generateDecoratedTreeFunction(DastContext& context) {
-        std::unique_ptr<ExpressionSeriesDAST> body = _body->generateDecoratedTreeExpressionSeries(context);
-        return llvm::make_unique<FunctionDAST>(context, _prototype->generateDecoratedTreeFunctionPrototype(context), std::move(body));
+    ExpressionSeriesAST* FunctionAST::getExpressionSeries() {
+        return _body.get();
     }
 }

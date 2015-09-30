@@ -17,10 +17,6 @@ namespace ola {
 			_types.push_back(context.typeList.getType(_args[i]));
 	}
 
-	Type* FunctionPrototypeDAST::getType() {
-		return _type;
-	}
-
 	llvm::Function* FunctionPrototypeDAST::codegen(Context* c) {
 		std::vector<llvm::Type*> types;
 

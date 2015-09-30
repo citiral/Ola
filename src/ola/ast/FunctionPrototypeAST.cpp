@@ -12,19 +12,19 @@
 namespace ola {
     FunctionPrototypeAST::FunctionPrototypeAST(std::string type, std::string name, std::vector<std::string> args,
                                                std::vector<std::string> types)
-            : _type(type),
+            : _typeName(type),
               _name(name),
               _args(std::move(args)),
-              _types(types) { }
+              _argsTypesNames(types) { }
 
     void FunctionPrototypeAST::log(std::ostream &s) {
         s << "Function prototype: " << _name << "(";
         if (_args.size() > 0)
-            s << _types[0] << " " << _args[0];
+            s << _argsTypesNames[0] << " " << _args[0];
         for (u32 i = 1; i < _args.size(); i++) {
-            s << ", " << _types[i] << " " << _args[i];
+            s << ", " << _argsTypesNames[i] << " " << _args[i];
         }
-        s << ") -> " << _type << "\n";
+        s << ") -> " << _typeName << "\n";
     }
 
     std::unique_ptr<FunctionPrototypeAST> FunctionPrototypeAST::generate(Lexer &l) {
@@ -75,12 +75,19 @@ namespace ola {
         return llvm::make_unique<FunctionPrototypeAST>(type, name, std::move(args), std::move(types));
     }
 
-    std::unique_ptr<DASTNode> FunctionPrototypeAST::generateDecoratedTree(DastContext& context) {
-        return generateDecoratedTreeFunctionPrototype(context);
+    Type* FunctionPrototypeAST::getType() {
+        return _type;
     }
 
-    std::unique_ptr<FunctionPrototypeDAST> FunctionPrototypeAST::generateDecoratedTreeFunctionPrototype(
-            DastContext& context) {
-        return llvm::make_unique<FunctionPrototypeDAST>(context, _name, _type, _args);
+    void FunctionPrototypeAST::setType(Type* type) {
+        _type = type;
+    }
+
+    std::string FunctionPrototypeAST::getTypeName() {
+        return _typeName;
+    }
+
+    std::string FunctionPrototypeAST::getFunctionName() {
+        return _name;
     }
 }

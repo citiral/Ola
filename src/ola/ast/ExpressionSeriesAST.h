@@ -22,11 +22,10 @@ namespace ola {
 
         static std::unique_ptr<ExpressionSeriesAST> generate(Lexer& l);
 
-        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
-        std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
-        std::unique_ptr<ExpressionSeriesDAST> generateDecoratedTreeExpressionSeries(DastContext& context);
-
         Type* getType() override;
+        void setType(Type* type);
+        std::vector<std::unique_ptr<ExpressionAST>>* getBody();
+
     private:
         Type* _type;
         std::vector<std::unique_ptr<ExpressionAST>> _body;

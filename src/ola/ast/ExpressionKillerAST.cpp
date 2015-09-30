@@ -17,15 +17,11 @@ namespace ola {
         s << ";";
     }
 
-    std::unique_ptr<DASTNode> ExpressionKillerAST::generateDecoratedTree(DastContext& context) {
-        return generateDecoratedTreeExpression(context);
-    }
-
-    std::unique_ptr<ExpressionDAST> ExpressionKillerAST::generateDecoratedTreeExpression(DastContext& context) {
-        return llvm::make_unique<ExpressionKillerDAST>(context, _expression->generateDecoratedTreeExpression(context));
-    }
-
     Type* ExpressionKillerAST::getType() {
         return _type;
+    }
+
+    void ExpressionKillerAST::setType(Type* type) {
+        _type = type;
     }
 }

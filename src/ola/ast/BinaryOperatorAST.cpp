@@ -65,18 +65,19 @@ namespace ola {
         s << ")";
     }
 
-    std::unique_ptr<DASTNode> BinaryOperatorAST::generateDecoratedTree(DastContext& context) {
-        return generateDecoratedTreeExpression(context);
-    }
-
-    std::unique_ptr<ExpressionDAST> BinaryOperatorAST::generateDecoratedTreeExpression(DastContext& context) {
-        return llvm::make_unique<BinaryOperatorDAST>(context,
-                                                     _leftExpression->generateDecoratedTreeExpression(context),
-                                                     _rightExpression->generateDecoratedTreeExpression(context),
-                                                     _operator);
-    }
-
     Type* BinaryOperatorAST::getType() {
         return _type;
+    }
+
+    ExpressionAST* BinaryOperatorAST::getLeftExpression() {
+        return *_leftExpression;
+    }
+
+    ExpressionAST* BinaryOperatorAST::getRightExpression() {
+        return *_rightExpression;
+    }
+
+    void BinaryOperatorAST::setType(Type* type) {
+        _type = type;
     }
 }

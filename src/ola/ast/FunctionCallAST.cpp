@@ -52,18 +52,14 @@ void ola::FunctionCallAST::log(std::ostream &s) {
     s << ")";
 }
 
-std::unique_ptr<ola::DASTNode> ola::FunctionCallAST::generateDecoratedTree(ola::DastContext& context) {
-    return generateDecoratedTreeExpression(context);
-}
-
-std::unique_ptr<ola::ExpressionDAST> ola::FunctionCallAST::generateDecoratedTreeExpression(ola::DastContext& context) {
-    std::vector<std::unique_ptr<ExpressionDAST>> args;
-    for (u32 i = 0 ; i < _args.size() ; i++)
-        args.push_back(_args[i]->generateDecoratedTreeExpression(context));
-
-    return llvm::make_unique<FunctionCallDAST>(context, _func, std::move(args));
-}
-
 ola::Type* ola::FunctionCallAST::getType() {
     return _type;
+}
+
+void ola::FunctionCallAST::setType(ola::Type* type) {
+    _type = type;
+}
+
+std::string ola::FunctionCallAST::getFunctionName() {
+    return _func;
 }

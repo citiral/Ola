@@ -7,6 +7,7 @@
 
 #include "../type/TypeList.h"
 #include "VariableStack.h"
+#include "../ast/FunctionPrototypeAST.h"
 #include <map>
 #include <string>
 #include <stack>
@@ -24,7 +25,7 @@ namespace ola {
         void popVariableStack();
 
         FunctionPrototypeDAST* getFunction(std::string);
-        void setFunction(std::string, FunctionPrototypeDAST* function);
+        void setFunction(std::string, FunctionPrototypeAST* function);
         void removeFunction(std::string);
 
     private:

@@ -19,10 +19,10 @@ namespace ola {
 
         virtual void log(std::ostream &s) override;
 
-        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
-        std::unique_ptr<FunctionDAST> generateDecoratedTreeFunction(DastContext& context);
-
         static std::unique_ptr<FunctionAST> generate(Lexer& l);
+
+        FunctionPrototypeAST* getPrototype();
+        ExpressionSeriesAST* getExpressionSeries();
 
     private:
         std::unique_ptr<FunctionPrototypeAST> _prototype;

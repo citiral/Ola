@@ -17,10 +17,8 @@ namespace ola {
 
         virtual void log(std::ostream &s) override;
 
-        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
-        std::unique_ptr<ExpressionDAST> generateDecoratedTreeExpression(DastContext& context) override;
-
         Type* getType() override;
+        void setType(Type* type);
     private:
         Type* _type;
         std::unique_ptr<ExpressionAST> _expression;

@@ -23,17 +23,22 @@ namespace ola {
 
         virtual void log(std::ostream &s);
 
-        std::unique_ptr<DASTNode> generateDecoratedTree(DastContext& context) override;
-        std::unique_ptr<FunctionPrototypeDAST> generateDecoratedTreeFunctionPrototype(DastContext& context);
-
         //generates this node from the current state of the lexer.
         static std::unique_ptr<FunctionPrototypeAST> generate(Lexer &l);
 
+        Type* getType();
+        std::string getTypeName();
+        std::string getFunctionName();
+        void setType(Type* type);
+
     private:
-        std::string _type;
+
+        Type* _type;
         std::string _name;
+        std::string _typeName;
+        std::vector<Type*> _argsTypes;
         std::vector<std::string> _args;
-        std::vector<std::string> _types;
+        std::vector<std::string> _argsTypesNames;
     };
 
 }
