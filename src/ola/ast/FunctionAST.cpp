@@ -5,6 +5,7 @@
 #include "FunctionAST.h"
 #include "../astassert.h"
 #include <llvm/IR/Function.h>
+#include <llvm/ADT/STLExtras.h>
 
 namespace ola {
     FunctionAST::FunctionAST(std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionSeriesAST> body)

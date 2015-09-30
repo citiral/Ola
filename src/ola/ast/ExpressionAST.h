@@ -10,8 +10,6 @@
 #include <memory>
 #include <llvm/IR/Value.h>
 #include "../codegen/Context.h"
-#include "../dast/ExpressionDAST.h"
-#include "../dast/DastContext.h"
 
 namespace ola {
     class ExpressionAST : public ASTNode {

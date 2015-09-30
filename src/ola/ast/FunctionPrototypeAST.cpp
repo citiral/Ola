@@ -3,6 +3,7 @@
 //
 
 #include "FunctionPrototypeAST.h"
+#include <llvm/ADT/STLExtras.h>
 #include "../types.h"
 #include "../astassert.h"
 #include "../codegenassert.h"
@@ -89,5 +90,21 @@ namespace ola {
 
     std::string FunctionPrototypeAST::getFunctionName() {
         return _name;
+    }
+
+    const std::vector<Type*>& FunctionPrototypeAST::getArgsTypes() {
+        return _argsTypes;
+    }
+
+    void FunctionPrototypeAST::setArgsTypes(std::vector<Type*> argsTypes) {
+        _argsTypes = std::move(argsTypes);
+    }
+
+    const std::vector<std::string>& FunctionPrototypeAST::getArgsNames() {
+        return _args;
+    }
+
+    const std::vector<std::string>& FunctionPrototypeAST::getArgsTypesNames() {
+        return _argsTypesNames;
     }
 }

@@ -3,9 +3,9 @@
 //
 
 #include "BinaryOperatorAST.h"
+#include <llvm/ADT/STLExtras.h>
 #include "../astassert.h"
 #include "../codegenassert.h"
-#include "../dast/BinaryOperatorDAST.h"
 
 namespace ola {
     BinaryOperatorAST::BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
@@ -70,11 +70,11 @@ namespace ola {
     }
 
     ExpressionAST* BinaryOperatorAST::getLeftExpression() {
-        return *_leftExpression;
+        return _leftExpression.get();
     }
 
     ExpressionAST* BinaryOperatorAST::getRightExpression() {
-        return *_rightExpression;
+        return _rightExpression.get();
     }
 
     void BinaryOperatorAST::setType(Type* type) {

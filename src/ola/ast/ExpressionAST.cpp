@@ -2,6 +2,7 @@
 // Created by citiral on 9/8/15.
 //
 
+#include <llvm/ADT/STLExtras.h>
 #include "../astassert.h"
 #include "ExpressionAST.h"
 #include "NumberIntegerAST.h"

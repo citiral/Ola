@@ -11,7 +11,6 @@
 #include <memory>
 #include <vector>
 #include <llvm/IR/Function.h>
-#include "../dast/FunctionPrototypeDAST.h"
 
 namespace ola {
 
@@ -27,15 +26,19 @@ namespace ola {
         static std::unique_ptr<FunctionPrototypeAST> generate(Lexer &l);
 
         Type* getType();
+        void setType(Type* type);
         std::string getTypeName();
         std::string getFunctionName();
-        void setType(Type* type);
+        const std::vector<Type*>& getArgsTypes();
+        void setArgsTypes(std::vector<Type*> argsTypes);
+        const std::vector<std::string>& getArgsNames();
+        const std::vector<std::string>& getArgsTypesNames();
 
     private:
 
         Type* _type;
-        std::string _name;
         std::string _typeName;
+        std::string _name;
         std::vector<Type*> _argsTypes;
         std::vector<std::string> _args;
         std::vector<std::string> _argsTypesNames;

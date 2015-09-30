@@ -10,7 +10,6 @@
 #include <memory>
 #include <vector>
 #include "../lexer.h"
-#include "../dast/ExpressionSeriesDAST.h"
 
 namespace ola {
     class ExpressionSeriesAST : public ExpressionAST {

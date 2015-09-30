@@ -30,10 +30,10 @@ namespace ola {
         virtual ~Type() {};
         virtual TypeType getType() = 0;
         virtual bool equals(Type* t) = 0;
+        virtual bool equals(PrimitiveType* t) = 0;
         virtual llvm::Type* getLlvmType(llvm::IRBuilder<>* builder) = 0;
 
     private:
-        virtual bool equals_handle(PrimitiveType* t) = 0;
     };
 
 }

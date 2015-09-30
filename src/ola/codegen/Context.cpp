@@ -6,7 +6,7 @@
 #include "Context.h"
 
 using namespace llvm;
-
+/*
 namespace ola {
 
     Context::Context()
@@ -30,4 +30,4 @@ namespace ola {
     void Context::popScope() {
         _scope = _scope->getParent();
     }
-}
+}*/

@@ -15,7 +15,7 @@ namespace ola{
         return t->equals(this);
     }
 
-    bool PrimitiveType::equals_handle(PrimitiveType* t) {
+    bool PrimitiveType::equals(PrimitiveType* t) {
         return t->_type == _type;
     }
 

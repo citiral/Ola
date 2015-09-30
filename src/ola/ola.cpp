@@ -49,10 +49,12 @@ namespace ola {
             }
         }
 
+        Context c;
+        TypePass typePass(c);
+
         //first, we do the type pass
-        TypePass pass;
         for (u32 i = 0 ; i < astRoot.size() ; i++) {
-            astRoot[i]->visit(pass);
+            astRoot[i]->visit(typePass);
         }
     }
 

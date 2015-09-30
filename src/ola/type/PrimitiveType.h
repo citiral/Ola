@@ -15,8 +15,8 @@ namespace ola {
         llvm::Type* getLlvmType(llvm::IRBuilder<>* builder) override;
 
         bool equals(Type* t) override;
+        bool equals(PrimitiveType* t) override;
     private:
-        bool equals_handle(PrimitiveType* t) override;
 
         TypeType _type;
         std::string _name;

@@ -2,8 +2,9 @@
 // Created by citiral on 9/8/15.
 //
 
+#include <llvm/ADT/STLExtras.h>
 #include "NumberIntegerAST.h"
-#include "../dast/NumberIntegerDAST.h"
+
 using namespace llvm;
 
 namespace ola {

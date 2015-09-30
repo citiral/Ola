@@ -3,10 +3,10 @@
 //
 
 #include "FunctionCallAST.h"
+#include <llvm/ADT/STLExtras.h>
 #include "../astassert.h"
 #include "../types.h"
 #include "../codegenassert.h"
-#include "../dast/FunctionCallDAST.h"
 
 using namespace llvm;
 

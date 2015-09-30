@@ -8,7 +8,6 @@
 #include "ASTNode.h"
 #include "FunctionPrototypeAST.h"
 #include "ExpressionSeriesAST.h"
-#include "../dast/FunctionDAST.h"
 #include <memory>
 
 namespace ola {

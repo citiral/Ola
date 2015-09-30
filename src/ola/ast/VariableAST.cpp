@@ -4,7 +4,6 @@
 
 #include "VariableAST.h"
 #include "../codegenassert.h"
-#include "../dast/VariableDAST.h"
 
 namespace ola {
     VariableAST::VariableAST(std::string name)

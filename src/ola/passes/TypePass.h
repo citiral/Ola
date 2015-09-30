@@ -5,9 +5,10 @@
 #ifndef OLA_TYPEPASS_H
 #define OLA_TYPEPASS_H
 
-#include "../dast/DastContext.h"
+#include "Context.h"
 
 namespace ola {
+
     class ASTNode;
     class BinaryOperatorAST;
     class ExpressionAST;
@@ -21,7 +22,7 @@ namespace ola {
 
     class TypePass {
     public:
-        TypePass(DastContext& dc);
+        TypePass(Context& dc);
 
         void accept(ASTNode* ast);
         void accept(BinaryOperatorAST* ast);
@@ -35,7 +36,7 @@ namespace ola {
         void accept(VariableAST* ast);
 
     private:
-        DastContext& _dc;
+        Context& _c;
     };
 }
 
