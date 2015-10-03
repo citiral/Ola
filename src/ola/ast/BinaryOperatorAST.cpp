@@ -4,15 +4,14 @@
 
 #include "BinaryOperatorAST.h"
 #include <llvm/ADT/STLExtras.h>
-#include "../astassert.h"
-#include "../codegenassert.h"
 
 namespace ola {
     BinaryOperatorAST::BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
                                          std::unique_ptr<ExpressionAST> rightExpression)
             : _operator(opp),
               _leftExpression(std::move(leftExpression)),
-              _rightExpression(std::move(rightExpression)) { }
+              _rightExpression(std::move(rightExpression)),
+              _type(nullptr) { }
 
     u32 BinaryOperatorAST::getPrecendence(char opp) {
         if (opp == '+')
@@ -55,16 +54,6 @@ namespace ola {
         return std::move(expr);
     }
 
-    void BinaryOperatorAST::log(std::ostream &s) {
-        s << "(";
-        _leftExpression->log(s);
-        s << ")";
-        s << " " << _operator << " ";
-        s << "(";
-        _rightExpression->log(s);
-        s << ")";
-    }
-
     Type* BinaryOperatorAST::getType() {
         return _type;
     }
@@ -78,6 +67,10 @@ namespace ola {
     }
 
     void BinaryOperatorAST::setType(Type* type) {
-        _type = type;
+        this->_type = type;
+    }
+
+    char BinaryOperatorAST::getOperator() {
+        return _operator;
     }
 }

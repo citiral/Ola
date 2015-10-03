@@ -9,11 +9,9 @@
 
 namespace ola {
     class VariableAST : public ExpressionAST {
+    AST_NODE
     public:
-        NODE_VISITOR_FUNCTIONS
         VariableAST(std::string name);
-
-        virtual void log(std::ostream &s);
 
         Type* getType() override;
         std::string getName();

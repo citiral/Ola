@@ -1,18 +1,18 @@
 //
-// Created by Citiral on 24/09/2015.
+// Created by Citiral on 3/10/2015.
 //
 
-#ifndef OLA_TYPEPASS_H
-#define OLA_TYPEPASS_H
+#ifndef OLA_LOGPASS_H
+#define OLA_LOGPASS_H
 
-#include "Context.h"
+#include <ostream>
 #include "AbstractPass.h"
 
 namespace ola {
 
-    class TypePass : public AbstractPass {
+    class LogPass : public AbstractPass {
     public:
-        TypePass(Context& dc);
+        LogPass(std::ostream& s);
 
         void accept(ASTNode* ast) override;
         void accept(BinaryOperatorAST* ast) override;
@@ -26,9 +26,8 @@ namespace ola {
         void accept(VariableAST* ast) override;
 
     private:
-        Context& _c;
+        std::ostream &_s;
     };
 }
 
-
-#endif //OLA_TYPEPASS_H
+#endif //OLA_LOGPASS_H

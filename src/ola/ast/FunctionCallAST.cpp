@@ -12,7 +12,8 @@ using namespace llvm;
 
 ola::FunctionCallAST::FunctionCallAST(std::string func, std::vector<std::unique_ptr<ola::ExpressionAST>> args)
     : _func(func),
-      _args(std::move(args)) {}
+      _args(std::move(args)),
+      _type(nullptr) {}
 
 
 std::unique_ptr<ola::FunctionCallAST> ola::FunctionCallAST::generate(std::string functionname, ola::Lexer &l) {
@@ -41,17 +42,6 @@ std::unique_ptr<ola::FunctionCallAST> ola::FunctionCallAST::generate(std::string
     return llvm::make_unique<FunctionCallAST>(functionname, std::move(args));
 }
 
-void ola::FunctionCallAST::log(std::ostream &s) {
-    s << _func << "(";
-    if (_args.size() > 1)
-        _args[0]->log(s);
-    for (u32 i = 1 ; i < _args.size() ; i++) {
-        s << ", ";
-        _args[i]->log(s);
-    }
-    s << ")";
-}
-
 ola::Type* ola::FunctionCallAST::getType() {
     return _type;
 }
@@ -62,4 +52,8 @@ void ola::FunctionCallAST::setType(ola::Type* type) {
 
 std::string ola::FunctionCallAST::getFunctionName() {
     return _func;
+}
+
+std::vector<std::unique_ptr<ola::ExpressionAST>>* ola::FunctionCallAST::getArgs() {
+    return &_args;
 }

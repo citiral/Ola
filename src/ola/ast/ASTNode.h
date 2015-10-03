@@ -6,22 +6,23 @@
 #define OLA_ASTNODE_H
 
 #include <ostream>
-#include "../passes/TypePass.h"
+#include "../passes/AbstractPass.h"
 
-#define NODE_VISITOR_FUNCTION(R, P) \
-virtual R visit(P& pass) {\
-    return pass.accept(this);\
+#define AST_NODE \
+public:\
+virtual void visit(AbstractPass& pass) {\
+    pass.accept(this);\
 }
 
-#define NODE_VISITOR_FUNCTIONS \
-NODE_VISITOR_FUNCTION(void, TypePass)
+#define ABSTRACT_AST_NODE \
+public:\
+virtual void visit(AbstractPass& pass) = 0;
 
 namespace ola {
     class ASTNode {
+    ABSTRACT_AST_NODE
     public:
-        NODE_VISITOR_FUNCTIONS
         virtual ~ASTNode() { };
-        virtual void log(std::ostream &s) = 0;
     };
 }
 

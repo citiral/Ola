@@ -13,11 +13,9 @@
 
 namespace ola {
     class ExpressionSeriesAST : public ExpressionAST {
+    AST_NODE
     public:
-        NODE_VISITOR_FUNCTIONS
         ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body);
-
-        virtual void log(std::ostream &s) override;
 
         static std::unique_ptr<ExpressionSeriesAST> generate(Lexer& l);
 

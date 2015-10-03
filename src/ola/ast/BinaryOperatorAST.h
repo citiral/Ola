@@ -17,12 +17,11 @@
 
 namespace ola {
     class BinaryOperatorAST : public ExpressionAST {
+    AST_NODE
     public:
-        NODE_VISITOR_FUNCTIONS
         BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
                           std::unique_ptr<ExpressionAST> rightExpression);
 
-        void log(std::ostream &s) override;
         static u32 getPrecendence(char opp);
 
         //fully parses calculation starting from the current state of the lexer. The LHS must already have been parsed
@@ -30,6 +29,7 @@ namespace ola {
 
         Type* getType() override;
         void setType(Type* type);
+        char getOperator();
         ExpressionAST* getLeftExpression();
         ExpressionAST* getRightExpression();
 

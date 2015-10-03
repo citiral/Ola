@@ -8,9 +8,9 @@
 #include "../ast/BinaryOperatorAST.h"
 #include "../ast/ExpressionKillerAST.h"
 #include "../ast/ExpressionSeriesAST.h"
+#include "../ast/FunctionPrototypeAST.h"
 #include "../ast/FunctionAST.h"
 #include "../ast/FunctionCallAST.h"
-#include "../ast/FunctionPrototypeAST.h"
 #include "../ast/NumberIntegerAST.h"
 #include "../ast/VariableAST.h"
 
@@ -28,9 +28,19 @@ namespace ola {
     void TypePass::accept(BinaryOperatorAST* ast) {
         ast->getLeftExpression()->visit(*this);
         ast->getRightExpression()->visit(*this);
-        if (ast->getLeftExpression()->getType()->equals(ast->getRightExpression()->getType())) {
-            ast->setType(ast->getLeftExpression()->getType());
+
+        //todo create invalid type
+        if (ast->getLeftExpression()->getType() == nullptr || ast->getRightExpression()->getType() == nullptr) {
+            PASS_ERROR("NULL type in binary operator");
+            ast->setType(nullptr);
+            return;
         }
+
+        //todo coerce types
+        PASS_ASSERT(ast->getLeftExpression()->getType()->equals(ast->getRightExpression()->getType()), "Incompatible types in binary operator.");
+
+        //todo get the implicit type here if something has to be cast
+        ast->setType(_c.types.getValue("i32"));
     }
 
     void TypePass::accept(ExpressionAST* ast) {
@@ -66,6 +76,13 @@ namespace ola {
     }
 
     void TypePass::accept(FunctionCallAST* ast) {
+        //first, set the type of all arguments
+        for (u32 i = 0 ; i < ast->getArgs()->size() ; i++)
+            ast->getArgs()->at(i)->visit(*this);
+
+        //TODO: name wrangling here
+
+        //then, set the return type of the function call
         ast->setType((_c.functions.getValue(ast->getFunctionName()))->getType());
     }
 

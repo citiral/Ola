@@ -12,11 +12,6 @@ namespace ola {
             : _prototype(std::move(prototype)),
               _body(std::move(body)) { }
 
-    void FunctionAST::log(std::ostream &s) {
-        _prototype->log(s);
-        _body->log(s);
-    }
-
     std::unique_ptr<FunctionAST> FunctionAST::generate(Lexer &l) {
         auto prototype = FunctionPrototypeAST::generate(l);
 

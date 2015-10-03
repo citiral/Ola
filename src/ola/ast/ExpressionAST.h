@@ -9,12 +9,12 @@
 #include "../lexer.h"
 #include <memory>
 #include <llvm/IR/Value.h>
-#include "../codegen/Context.h"
+#include "../type/Type.h"
 
 namespace ola {
     class ExpressionAST : public ASTNode {
+    ABSTRACT_AST_NODE
     public:
-        NODE_VISITOR_FUNCTIONS
         virtual ~ExpressionAST();
 
         virtual Type* getType() = 0;

@@ -11,14 +11,13 @@
 
 namespace ola {
     class ExpressionKillerAST : public ExpressionAST {
+    AST_NODE
     public:
-        NODE_VISITOR_FUNCTIONS
         ExpressionKillerAST(std::unique_ptr<ExpressionAST> expression);
-
-        virtual void log(std::ostream &s) override;
 
         Type* getType() override;
         void setType(Type* type);
+        ExpressionAST* getExpression();
     private:
         Type* _type;
         std::unique_ptr<ExpressionAST> _expression;

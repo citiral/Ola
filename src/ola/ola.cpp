@@ -1,8 +1,8 @@
 #include "ola.h"
-#include <llvm/ADT/STLExtras.h>
-#include <stdlib.h>
-#include <iostream>
 #include "astassert.h"
+#include "passes/LogPass.h"
+#include "passes/TypePass.h"
+#include "passes/CodegenPass.h"
 
 namespace ola {
 
@@ -27,6 +27,29 @@ namespace ola {
     }
 
     void OlaToLlvmCompiler::compileProgram() {
+        //first, lex the program
+        auto root = lexProgram();
+
+        //run all passes
+        Context c;
+        TypePass typePass(c);
+        runPass(root, typePass);
+
+        CodegenPass codegenPass(c);
+        runPass(root, codegenPass);
+
+        LogPass logPass(std::cout);
+        runPass(root, logPass);
+
+    }
+
+    void OlaToLlvmCompiler::runPass(std::vector<std::unique_ptr<ASTNode>>& nodes, AbstractPass& pass) {
+        for (u32 i = 0 ; i < nodes.size() ; i++) {
+            nodes[i]->visit(pass);
+        }
+    }
+
+    std::vector<std::unique_ptr<ASTNode>> OlaToLlvmCompiler::lexProgram() {
         //get the first token
         _lexer.nextToken();
 
@@ -39,23 +62,15 @@ namespace ola {
             switch (_lexer.curToken()) {
                 case Token::Eob:
                 case Token::Eof:
-                    std::cout << "successfully parsed program\n";
-                    return;
+                    return std::move(astRoot);
                 default:
                     auto elem = compileBlock();
-                    elem->log(std::cout);
                     astRoot.push_back(std::move(elem));
                     break;
             }
         }
 
-        Context c;
-        TypePass typePass(c);
-
-        //first, we do the type pass
-        for (u32 i = 0 ; i < astRoot.size() ; i++) {
-            astRoot[i]->visit(typePass);
-        }
+        return std::move(astRoot);
     }
 
     std::unique_ptr<ASTNode> OlaToLlvmCompiler::compileBlock() {

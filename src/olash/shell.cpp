@@ -32,11 +32,11 @@ void Shell::scheduleExit()
 std::string Shell::getInput()
 {
 	std::string input("\nfunction add(i32 x, i32 y) -> i32 {\n"
-							  "\tx+y\n"
+							  "\t1+2+3\n"
 							  "}\n"
 			                  "function main() -> i32\n"
 			                  "{\n"
-			                  "\tadd(5+70,2*3+4*5)\n"
+			                  "\tadd(2+5+70,2*3+4*5)\n"
 			                  "}");
 	//input += getchar();
 	//std::cin >> input;

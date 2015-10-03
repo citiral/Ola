@@ -9,11 +9,8 @@ using namespace llvm;
 
 namespace ola {
     NumberIntegerAST::NumberIntegerAST(i32 value)
-            : _value(value) { }
-
-    void NumberIntegerAST::log(std::ostream &s) {
-        s << "i32: " << _value;
-    }
+            : _value(value),
+        _type(nullptr) { }
 
     std::unique_ptr<NumberIntegerAST> NumberIntegerAST::generate(Lexer &l) {
         i64 number = atol(l.value.string.c_str());
@@ -27,5 +24,9 @@ namespace ola {
 
     void NumberIntegerAST::setType(Type* type) {
         _type = type;
+    }
+
+    i32 NumberIntegerAST::getValue() {
+        return _value;
     }
 }

@@ -18,16 +18,6 @@ namespace ola {
               _args(std::move(args)),
               _argsTypesNames(types) { }
 
-    void FunctionPrototypeAST::log(std::ostream &s) {
-        s << "Function prototype: " << _name << "(";
-        if (_args.size() > 0)
-            s << _argsTypesNames[0] << " " << _args[0];
-        for (u32 i = 1; i < _args.size(); i++) {
-            s << ", " << _argsTypesNames[i] << " " << _args[i];
-        }
-        s << ") -> " << _typeName << "\n";
-    }
-
     std::unique_ptr<FunctionPrototypeAST> FunctionPrototypeAST::generate(Lexer &l) {
         //eat the function token
         l.nextToken();

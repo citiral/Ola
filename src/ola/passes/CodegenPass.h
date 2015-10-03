@@ -1,18 +1,19 @@
 //
-// Created by Citiral on 24/09/2015.
+// Created by Citiral on 3/10/2015.
 //
 
-#ifndef OLA_TYPEPASS_H
-#define OLA_TYPEPASS_H
+#ifndef OLA_CODEGENPASS_H
+#define OLA_CODEGENPASS_H
 
+#include <llvm/IR/Value.h>
+#include "AbstractStackPass.h"
 #include "Context.h"
-#include "AbstractPass.h"
 
 namespace ola {
 
-    class TypePass : public AbstractPass {
+    class CodegenPass : public AbstractStackPass<llvm::Value*> {
     public:
-        TypePass(Context& dc);
+        CodegenPass(Context& c);
 
         void accept(ASTNode* ast) override;
         void accept(BinaryOperatorAST* ast) override;
@@ -26,9 +27,9 @@ namespace ola {
         void accept(VariableAST* ast) override;
 
     private:
+        //llvm::Function* _lastFunction;
         Context& _c;
     };
 }
 
-
-#endif //OLA_TYPEPASS_H
+#endif //OLA_CODEGENPASS_H

@@ -7,11 +7,8 @@
 
 namespace ola {
     VariableAST::VariableAST(std::string name)
-            : _name(name) { }
-
-    void VariableAST::log(std::ostream &s) {
-        s << "var: " << _name;
-    }
+            : _name(name),
+        _type(nullptr) { }
 
     Type* VariableAST::getType() {
         return _type;

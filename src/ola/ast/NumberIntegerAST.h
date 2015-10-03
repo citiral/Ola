@@ -12,16 +12,15 @@
 
 namespace ola {
     class NumberIntegerAST : public ExpressionAST {
+    AST_NODE
     public:
-        NODE_VISITOR_FUNCTIONS
         NumberIntegerAST(i32 value);
-
-        void log(std::ostream &s) override;
 
         static std::unique_ptr<NumberIntegerAST> generate(Lexer& l);
 
         Type* getType() override;
         void setType(Type* type);
+        i32 getValue();
 
     private:
         Type* _type;

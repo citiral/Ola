@@ -9,15 +9,8 @@
 
 namespace ola {
     ExpressionSeriesAST::ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body)
-            : _body(std::move(body)) { }
-
-    void ExpressionSeriesAST::log(std::ostream &s) {
-        s << "expression series: ";
-        for (u32 i = 0; i < _body.size(); i++) {
-            _body[i]->log(s);
-            s << "\n";
-        }
-    }
+            : _body(std::move(body)),
+              _type(nullptr) { }
 
     std::unique_ptr<ExpressionSeriesAST> ExpressionSeriesAST::generate(Lexer &l) {
         std::vector<std::unique_ptr<ExpressionAST>> expressions;

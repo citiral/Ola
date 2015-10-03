@@ -7,7 +7,7 @@
 
 #include "ASTNode.h"
 #include "../lexer.h"
-#include "../codegen/Context.h"
+#include "../type/Type.h"
 #include <memory>
 #include <vector>
 #include <llvm/IR/Function.h>
@@ -15,12 +15,10 @@
 namespace ola {
 
     class FunctionPrototypeAST : public ASTNode {
+    AST_NODE
     public:
-        NODE_VISITOR_FUNCTIONS
         FunctionPrototypeAST(std::string type, std::string name, std::vector<std::string> args,
                              std::vector<std::string> types);
-
-        virtual void log(std::ostream &s);
 
         //generates this node from the current state of the lexer.
         static std::unique_ptr<FunctionPrototypeAST> generate(Lexer &l);
