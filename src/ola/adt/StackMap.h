@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <map>
+#include "../defines.h"
 
 template <class K, class V>
 class StackMap {
@@ -44,6 +45,7 @@ void StackMap<K, V>::addValue(K key, V value) {
 
 template <class K, class V>
 V StackMap<K, V>::getValue(K key) {
+    COMPILER_ASSERT(hasValue(key), "Key does not exist.");
     return getValue(key, _listMap.size()-1);
 };
 

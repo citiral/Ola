@@ -3,6 +3,7 @@
 #include "lexer.h"
 #include "types.h"
 #include "ast.h"
+#include "passes/Context.h"
 #include <string>
 #include <memory>
 
@@ -32,6 +33,8 @@ private:
 
 	//curtok should equal the first unparsed token after exiting a function
 	Lexer _lexer;
+	//context on which all passes will run
+	Context _c;
 };
 
 }

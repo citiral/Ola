@@ -24,8 +24,8 @@ namespace ola {
     }
 
     void CodegenPass::accept(BinaryOperatorAST* ast) {
-        auto lhs = visitAndPop(ast);
-        auto rhs = visitAndPop(ast);
+        auto lhs = visitAndPop(ast->getLeftExpression());
+        auto rhs = visitAndPop(ast->getRightExpression());
 
         //if one of the ends is invalid, this one will be too
         if (lhs == nullptr || rhs == nullptr)
@@ -79,7 +79,6 @@ namespace ola {
 
         // Record the function arguments in the NamedValues map.
         for (auto &Arg : func->args()) {
-            std::cout << "adding var " << Arg.getName().str() << "\n";
             _c.llvmVariables.addValue(Arg.getName(), &Arg);
         }
 
@@ -99,9 +98,7 @@ namespace ola {
 
         //validate and return
         llvm::verifyFunction(*func);
-        func->dump();
 
-        std::cout << "Function compiled\n";
         _c.llvmFunctions.addValue(ast->getPrototype()->getFunctionName(), func);
         return;
     }
@@ -142,6 +139,7 @@ namespace ola {
 
         //get the function type
         llvm::FunctionType* funcType = llvm::FunctionType::get(ast->getType()->getLlvmType(&_c.llvmBuilder), types, false);
+
         //and create the function
         llvm::Function* func = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, ast->getFunctionName(), &_c.llvmModule);
 

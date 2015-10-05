@@ -4,9 +4,11 @@
 
 namespace ola {
 
-    Lexer::Lexer()
-        : _buffer(0),
-        _bufferIndex(0)
+    Lexer::Lexer():
+            _buffer(0),
+            _bufferIndex(0),
+            _lineNumber(0),
+            _charNumber(0)
     {
     }
 
@@ -19,6 +21,8 @@ namespace ola {
     {
         _buffer = buffer;
         _bufferIndex = 0;
+        _lineNumber = 0;
+        _charNumber = 0;
     }
 
     bool Lexer::atEndOfBuffer() {

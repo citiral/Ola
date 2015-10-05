@@ -88,5 +88,7 @@ namespace ola {
         const char* _buffer;
 		unsigned int _bufferIndex;
 		Token _lastToken;
+		unsigned int _lineNumber;
+		unsigned int _charNumber;
 	};
 }

@@ -6,7 +6,7 @@
 
 namespace ola {
 
-    OlaToLlvmCompiler::OlaToLlvmCompiler()
+    OlaToLlvmCompiler::OlaToLlvmCompiler():
     {
 
     }
@@ -31,16 +31,16 @@ namespace ola {
         auto root = lexProgram();
 
         //run all passes
-        Context c;
-        TypePass typePass(c);
+        TypePass typePass(_c);
         runPass(root, typePass);
 
-        CodegenPass codegenPass(c);
+        CodegenPass codegenPass(_c);
         runPass(root, codegenPass);
 
         LogPass logPass(std::cout);
         runPass(root, logPass);
 
+        _c.llvmModule.dump();
     }
 
     void OlaToLlvmCompiler::runPass(std::vector<std::unique_ptr<ASTNode>>& nodes, AbstractPass& pass) {
