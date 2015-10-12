@@ -48,7 +48,7 @@ add_library (ola SHARED
 		src/ola/type/Type.h src/ola/type/TypeList.cpp src/ola/type/TypeList.h src/ola/type/PrimitiveType.cpp src/ola/type/PrimitiveType.h
 		src/ola/passes/TypePass.cpp src/ola/passes/TypePass.h src/ola/passes/Context.cpp src/ola/passes/Context.h src/ola/adt/StackMap.h
 		src/ola/passes/LogPass.cpp src/ola/passes/LogPass.h src/ola/passes/AbstractPass.cpp src/ola/passes/AbstractPass.h src/ola/passes/CodegenPass.cpp
-		src/ola/passes/CodegenPass.h src/ola/passes/AbstractStackPass.cpp src/ola/passes/AbstractStackPass.h src/ola/defines.h)
+		src/ola/passes/CodegenPass.h src/ola/passes/AbstractStackPass.cpp src/ola/passes/AbstractStackPass.h src/ola/defines.h src/ola/ast/ErrorAST.cpp src/ola/ast/ErrorAST.h)
 
 target_link_libraries(ola ${llvm_libs})
 

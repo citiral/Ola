@@ -7,7 +7,8 @@
 
 #include <ostream>
 #include "../passes/AbstractPass.h"
-
+#include "../types.h"
+#include "../lexer.h"
 #define AST_NODE \
 public:\
 virtual void visit(AbstractPass& pass) {\
@@ -22,7 +23,13 @@ namespace ola {
     class ASTNode {
     ABSTRACT_AST_NODE
     public:
-        virtual ~ASTNode() { };
+        virtual ~ASTNode(Lexer& l);
+
+        u32 getLineNumber();
+        u32 getCharNumber();
+    private:
+        u32 _lineNumber;
+        u32 _charNumber;
     };
 }
 

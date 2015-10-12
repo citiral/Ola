@@ -6,7 +6,7 @@
 
 namespace ola {
 
-    OlaToLlvmCompiler::OlaToLlvmCompiler():
+    OlaToLlvmCompiler::OlaToLlvmCompiler()
     {
 
     }

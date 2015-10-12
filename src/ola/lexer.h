@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include "types.h"
 
 enum class Token {
 	Character = 1,
@@ -55,6 +56,9 @@ namespace ola {
 		void loadBuffer(const char* buffer);
 
 		TokenValues value;
+
+		u32 getLineNumber() const;
+		u32 getCharNumber() const;
 
 	private:
 		//parses and returns the next token

@@ -30,8 +30,15 @@ namespace ola {
     }
 
     void Lexer::nextChar() {
-        if (_buffer[_bufferIndex] != '\0')
+        if (_buffer[_bufferIndex] == '\n') {
+            _lineNumber++;
+            _charNumber = 0;
+        }
+
+        if (_buffer[_bufferIndex] != '\0') {
             _bufferIndex++;
+            _charNumber++;
+        }
     }
 
     char Lexer::curChar() {
@@ -45,8 +52,9 @@ namespace ola {
     }
 
     void Lexer::skipWhitespace() {
-        while (isspace(curChar()))
+        while (isspace(curChar())) {
             nextChar();
+        }
     }
 
     Token Lexer::nextToken()
@@ -254,4 +262,11 @@ namespace ola {
         return false;
     }
 
+    u32 Lexer::getLineNumber() const {
+        return _lineNumber;
+    }
+
+    u32 Lexer::getCharNumber() const {
+        return _charNumber;
+    }
 }
