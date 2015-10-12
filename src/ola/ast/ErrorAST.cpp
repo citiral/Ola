@@ -6,8 +6,9 @@
 
 namespace ola {
 
-	ErrorAST::ErrorAST(std::string error):
-		_error(std::move(error)) {
+	ErrorAST::ErrorAST(Lexer& l, std::string error):
+			ASTNode(l),
+			_error(std::move(error)) {
 
 	}
 

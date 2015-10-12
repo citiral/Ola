@@ -11,6 +11,11 @@
 #include "FunctionCallAST.h"
 
 namespace ola {
+
+    ExpressionAST::ExpressionAST(Lexer& l):
+            ASTNode(l) {
+
+    }
     ExpressionAST::~ExpressionAST() {
     }
 

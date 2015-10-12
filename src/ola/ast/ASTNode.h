@@ -23,7 +23,8 @@ namespace ola {
     class ASTNode {
     ABSTRACT_AST_NODE
     public:
-        virtual ~ASTNode(Lexer& l);
+        ASTNode(Lexer& l);
+        virtual ~ASTNode() {};
 
         u32 getLineNumber();
         u32 getCharNumber();

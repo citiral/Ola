@@ -19,7 +19,7 @@ namespace ola {
     class BinaryOperatorAST : public ExpressionAST {
     AST_NODE
     public:
-        BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
+        BinaryOperatorAST(Lexer& l, char opp, std::unique_ptr<ExpressionAST> leftExpression,
                           std::unique_ptr<ExpressionAST> rightExpression);
 
         static u32 getPrecendence(char opp);

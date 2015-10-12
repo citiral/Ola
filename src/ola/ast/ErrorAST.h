@@ -12,7 +12,7 @@ namespace ola {
 	class ErrorAST : public ASTNode {
 		AST_NODE
 	public:
-		ErrorAST(std::string error);
+		ErrorAST(Lexer& l, std::string error);
 
 	private:
 		std::string _error;

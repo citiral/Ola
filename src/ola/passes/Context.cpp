@@ -10,6 +10,7 @@ namespace ola {
     Context::Context():
         llvmBuilder(llvm::getGlobalContext()),
         llvmModule("Ola", llvm::getGlobalContext()) {
+
         //TODO: delete this memory
         types.addValue("f32", new PrimitiveType(TypeType::PRIMITIVE_F32, "f32"));
         types.addValue("f64", new PrimitiveType(TypeType::PRIMITIVE_F64, "f64"));

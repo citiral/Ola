@@ -15,6 +15,7 @@ namespace ola {
     class ExpressionAST : public ASTNode {
     ABSTRACT_AST_NODE
     public:
+        ExpressionAST(Lexer& l);
         virtual ~ExpressionAST();
 
         virtual Type* getType() = 0;

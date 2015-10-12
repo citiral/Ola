@@ -6,12 +6,13 @@
 #include <llvm/ADT/STLExtras.h>
 
 namespace ola {
-    BinaryOperatorAST::BinaryOperatorAST(char opp, std::unique_ptr<ExpressionAST> leftExpression,
-                                         std::unique_ptr<ExpressionAST> rightExpression)
-            : _operator(opp),
-              _leftExpression(std::move(leftExpression)),
-              _rightExpression(std::move(rightExpression)),
-              _type(nullptr) { }
+    BinaryOperatorAST::BinaryOperatorAST(Lexer& l, char opp, std::unique_ptr<ExpressionAST> leftExpression,
+                                         std::unique_ptr<ExpressionAST> rightExpression):
+    ASTNode(l),
+    _operator(opp),
+    _leftExpression(std::move(leftExpression)),
+    _rightExpression(std::move(rightExpression)),
+    _type(nullptr) { }
 
     u32 BinaryOperatorAST::getPrecendence(char opp) {
         if (opp == '+')
@@ -48,7 +49,7 @@ namespace ola {
             }
 
             //merge the expressions
-            expr = llvm::make_unique<BinaryOperatorAST>(opp, std::move(expr), std::move(RHS));
+            expr = llvm::make_unique<BinaryOperatorAST>(l, opp, std::move(expr), std::move(RHS));
         }
 
         return std::move(expr);
