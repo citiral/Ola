@@ -17,7 +17,7 @@ namespace ola {
     class FunctionPrototypeAST : public ASTNode {
     AST_NODE
     public:
-        FunctionPrototypeAST(std::string type, std::string name, std::vector<std::string> args,
+        FunctionPrototypeAST(Lexer& l, std::string type, std::string name, std::vector<std::string> args,
                              std::vector<std::string> types);
 
         //generates this node from the current state of the lexer.

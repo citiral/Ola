@@ -14,7 +14,7 @@ namespace ola {
     class FunctionAST : public ASTNode {
     AST_NODE
     public:
-        FunctionAST(std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionSeriesAST> body);
+        FunctionAST(Lexer& l, std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionSeriesAST> body);
 
         static std::unique_ptr<FunctionAST> generate(Lexer& l);
 

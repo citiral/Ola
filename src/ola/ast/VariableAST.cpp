@@ -6,9 +6,10 @@
 #include "../codegenassert.h"
 
 namespace ola {
-    VariableAST::VariableAST(std::string name)
-            : _name(name),
-        _type(nullptr) { }
+    VariableAST::VariableAST(Lexer& l, std::string name):
+            ExpressionAST(l),
+            _name(name),
+            _type(nullptr) { }
 
     Type* VariableAST::getType() {
         return _type;

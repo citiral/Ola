@@ -1,11 +1,11 @@
 #include "lexer.h"
 #include <ctype.h>
 #include <stdlib.h>
+#include <string>
 
 namespace ola {
 
     Lexer::Lexer():
-            _buffer(0),
             _bufferIndex(0),
             _lineNumber(0),
             _charNumber(0)
@@ -17,32 +17,44 @@ namespace ola {
 
     }
 
-    void Lexer::loadBuffer(const char* buffer)
+    void Lexer::setInput(std::string input)
     {
-        _buffer = buffer;
+        _input = input;
         _bufferIndex = 0;
         _lineNumber = 0;
         _charNumber = 0;
     }
 
+    void Lexer::setCallback(std::function<std::string()> inputCallback)
+    {
+        _inputCallback = std::move(inputCallback);
+    }
+
     bool Lexer::atEndOfBuffer() {
-        return _buffer[_bufferIndex] == '\0';
+        return _input.c_str()[_bufferIndex] == '\0';
     }
 
     void Lexer::nextChar() {
-        if (_buffer[_bufferIndex] == '\n') {
+        if (_input.c_str()[_bufferIndex] == '\n') {
             _lineNumber++;
             _charNumber = 0;
         }
 
-        if (_buffer[_bufferIndex] != '\0') {
+        if (_input.c_str()[_bufferIndex] != '\0') {
             _bufferIndex++;
             _charNumber++;
+        } else {
+            //if we are at the end of the buffer, get new input
+            fetchInput();
+            if (_input.c_str()[_bufferIndex] != '\0') {
+                _bufferIndex++;
+                _charNumber++;
+            }
         }
     }
 
     char Lexer::curChar() {
-        return _buffer[_bufferIndex];
+        return _input.c_str()[_bufferIndex];
     }
 
     char Lexer::eatChar() {
@@ -60,7 +72,8 @@ namespace ola {
     Token Lexer::nextToken()
     {
         //and then parse and return the next token
-        return _lastToken = parseNext();
+        _lastToken = parseNext();
+        return _lastToken;
     }
 
     Token Lexer::curToken()
@@ -72,9 +85,13 @@ namespace ola {
         //skip whitespace of the current character
         skipWhitespace();
 
-        //if we are at the end, return end of buffer
-        if (curChar() == '\0')
-            return Token::Eob;
+        //return eof if we are at the end
+        if (curChar() == '\0') {
+            //because this statement might be ran on the first character of the buffer, peek for new information first
+            fetchInput();
+            if (curChar() == '\0')
+                return Token::Eof;
+        }
 
         Token ret;
 
@@ -202,11 +219,11 @@ namespace ola {
     {
         int wordindex = 0;
 
-        while(_buffer[_bufferIndex + wordindex] == word[wordindex]) {
+        while(_input.c_str()[_bufferIndex + wordindex] == word[wordindex]) {
             //if we are at the end of the word
             if (word[wordindex] == '\0') {
                 //if the buffer's current character is not alfanumeric
-                if (!isalnum(_buffer[_bufferIndex+wordindex])) {
+                if (!isalnum(_input.c_str()[_bufferIndex+wordindex])) {
                     //success! advance bufferindex and return true
                     _bufferIndex += wordindex;
                     return true;
@@ -216,7 +233,7 @@ namespace ola {
             }
 
             //if the word is not at the end, but the buffer is, return false
-            if (_buffer[_bufferIndex + wordindex] == '\0') {
+            if (_input.c_str()[_bufferIndex + wordindex] == '\0') {
                 return false;
             }
 
@@ -226,7 +243,7 @@ namespace ola {
         //if we are at the end of the word
         if (word[wordindex] == '\0') {
             //if the buffer's current character is not alfanumeric
-            if (!isalnum(_buffer[_bufferIndex+wordindex])) {
+            if (!isalnum(_input.c_str()[_bufferIndex+wordindex])) {
                 //success! advance bufferindex and return true
                 _bufferIndex += wordindex;
                 return true;
@@ -239,7 +256,7 @@ namespace ola {
     {
         int wordindex = 0;
 
-        while(_buffer[_bufferIndex + wordindex] == word[wordindex]) {
+        while(_input.c_str()[_bufferIndex + wordindex] == word[wordindex]) {
             //if we are at the end of the word
             if (word[wordindex] == '\0') {
                 _bufferIndex += wordindex;
@@ -247,7 +264,7 @@ namespace ola {
             }
 
             //if the word is not at the end, but the buffer is, return false
-            if (_buffer[_bufferIndex + wordindex] == '\0') {
+            if (_input.c_str()[_bufferIndex + wordindex] == '\0') {
                 return false;
             }
 
@@ -268,5 +285,9 @@ namespace ola {
 
     u32 Lexer::getCharNumber() const {
         return _charNumber;
+    }
+
+    void Lexer::fetchInput() {
+        _input += _inputCallback();
     }
 }

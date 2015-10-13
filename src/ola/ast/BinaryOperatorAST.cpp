@@ -8,11 +8,11 @@
 namespace ola {
     BinaryOperatorAST::BinaryOperatorAST(Lexer& l, char opp, std::unique_ptr<ExpressionAST> leftExpression,
                                          std::unique_ptr<ExpressionAST> rightExpression):
-    ASTNode(l),
-    _operator(opp),
-    _leftExpression(std::move(leftExpression)),
-    _rightExpression(std::move(rightExpression)),
-    _type(nullptr) { }
+            ExpressionAST(l),
+            _operator(opp),
+            _leftExpression(std::move(leftExpression)),
+            _rightExpression(std::move(rightExpression)),
+            _type(nullptr) { }
 
     u32 BinaryOperatorAST::getPrecendence(char opp) {
         if (opp == '+')

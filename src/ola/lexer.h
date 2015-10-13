@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include "types.h"
+#include <functional>
 
 enum class Token {
 	Character = 1,
@@ -24,7 +25,6 @@ enum class Token {
 	Char_closeCurlyBracket = 112,
 	Char_semicolon = 113,
 
-	Eob = 254,
 	Eof = 255,
 	None = 0,
 };
@@ -53,7 +53,9 @@ namespace ola {
 		bool atEndOfBuffer();
 
 		//sets the buffer to parse to the buffer* and resets the buffer index. The buffer should be null terminated
-		void loadBuffer(const char* buffer);
+		void setInput(std::string input);
+		//feeds the compiler with the given code, which in turn gets immediately compiled.
+		void setCallback(std::function<std::string()> inputCallback);
 
 		TokenValues value;
 
@@ -89,7 +91,14 @@ namespace ola {
 		//returns true if the next word is equal to `word` and if so, skips it in the buffer. it stops at any non matching character
 		bool tryCompareAndSkipNextSymbol(const char *word);
 
-        const char* _buffer;
+		//refetches input from the callback
+		void fetchInput();
+
+
+		//callback to get new input for the lexer
+		std::function<std::string()> _inputCallback;
+		//the current input that is being compiled
+		std::string _input;
 		unsigned int _bufferIndex;
 		Token _lastToken;
 		unsigned int _lineNumber;

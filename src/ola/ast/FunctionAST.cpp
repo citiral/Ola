@@ -8,9 +8,10 @@
 #include <llvm/ADT/STLExtras.h>
 
 namespace ola {
-    FunctionAST::FunctionAST(std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionSeriesAST> body)
-            : _prototype(std::move(prototype)),
-              _body(std::move(body)) { }
+    FunctionAST::FunctionAST(Lexer& l, std::unique_ptr<FunctionPrototypeAST> prototype, std::unique_ptr<ExpressionSeriesAST> body):
+            ASTNode(l),
+            _prototype(std::move(prototype)),
+            _body(std::move(body)) { }
 
     std::unique_ptr<FunctionAST> FunctionAST::generate(Lexer &l) {
         auto prototype = FunctionPrototypeAST::generate(l);
@@ -25,7 +26,7 @@ namespace ola {
         COMPILE_ASSERT(l.curToken() == Token::Char_closeCurlyBracket, "Expected } At the end of the function body.");
         l.nextToken();
 
-        return llvm::make_unique<FunctionAST>(std::move(prototype), std::move(body));
+        return llvm::make_unique<FunctionAST>(l, std::move(prototype), std::move(body));
     }
 
     FunctionPrototypeAST* FunctionAST::getPrototype() {

@@ -6,6 +6,7 @@
 #include "passes/Context.h"
 #include <string>
 #include <memory>
+#include <functional>
 
 namespace ola {
 
@@ -17,15 +18,16 @@ public:
 	OlaToLlvmCompiler();
 	~OlaToLlvmCompiler();
 
+	//compiles the program
+	void compileProgram();
+
 	//feeds the compiler with the given code, which in turn gets immediately compiled.
-	void feed(std::string code);
+	void setCallback(std::function<std::string()> inputCallback);
 
 private:
-
-	//compiles the program using the tokens the lexer will return
-	void compileProgram();
 	//lexes the program and returns an array of root nodes (the blocks in the program)
 	std::vector<std::unique_ptr<ASTNode>> lexProgram();
+
 	//runs a single pass over all nodes in the given array
 	void runPass(std::vector<std::unique_ptr<ASTNode>>& nodes, AbstractPass& pass);
 

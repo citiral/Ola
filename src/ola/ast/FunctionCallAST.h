@@ -12,7 +12,7 @@ namespace ola {
     class FunctionCallAST : public ExpressionAST {
     AST_NODE
     public:
-        FunctionCallAST(std::string func, std::vector<std::unique_ptr<ExpressionAST>> args);
+        FunctionCallAST(Lexer& l, std::string func, std::vector<std::unique_ptr<ExpressionAST>> args);
 
         //generates a functioncallast from the current state of the lexer. The functionname must already be parsed
         static std::unique_ptr<FunctionCallAST> generate(std::string functionname, Lexer& l);

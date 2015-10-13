@@ -14,7 +14,7 @@ namespace ola {
     class NumberIntegerAST : public ExpressionAST {
     AST_NODE
     public:
-        NumberIntegerAST(i32 value);
+        NumberIntegerAST(Lexer& l, i32 value);
 
         static std::unique_ptr<NumberIntegerAST> generate(Lexer& l);
 

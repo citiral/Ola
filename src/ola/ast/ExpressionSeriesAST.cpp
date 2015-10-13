@@ -8,9 +8,10 @@
 #include "../astassert.h"
 
 namespace ola {
-    ExpressionSeriesAST::ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body)
-            : _body(std::move(body)),
-              _type(nullptr) { }
+    ExpressionSeriesAST::ExpressionSeriesAST(Lexer& l, std::vector<std::unique_ptr<ExpressionAST>> body):
+            ExpressionAST(l),
+            _body(std::move(body)),
+            _type(nullptr) { }
 
     std::unique_ptr<ExpressionSeriesAST> ExpressionSeriesAST::generate(Lexer &l) {
         std::vector<std::unique_ptr<ExpressionAST>> expressions;
@@ -19,7 +20,7 @@ namespace ola {
         while (1) {
             //if there is a close curly bracket, stop the series
             if (l.curToken() == Token::Char_closeCurlyBracket) {
-                return llvm::make_unique<ExpressionSeriesAST>(std::move(expressions));
+                return llvm::make_unique<ExpressionSeriesAST>(l, std::move(expressions));
             }
 
             //parse an expression
@@ -28,7 +29,7 @@ namespace ola {
             if (expr != nullptr) {
                 if (l.curToken() == Token::Char_semicolon) {
                     //generate an expressionkiller
-                    expressions.push_back(llvm::make_unique<ExpressionKillerAST>(std::move(expr)));
+                    expressions.push_back(llvm::make_unique<ExpressionKillerAST>(l, std::move(expr)));
                     //eat the semicolon and continue
                     l.nextToken();
                 } else if (l.curToken() == Token::Char_closeCurlyBracket) {
@@ -41,7 +42,7 @@ namespace ola {
     }
 
     Type* ExpressionSeriesAST::getType() {
-        return (*_body.end())->getType();
+        return (_body.back())->getType();
     }
 
     void ExpressionSeriesAST::setType(Type* type) {

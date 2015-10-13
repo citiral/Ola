@@ -35,6 +35,6 @@ namespace ola{
         if (_type == TypeType::PRIMITIVE_F64)
             return builder->getDoubleTy();
         else
-            return nullptr;
+            return builder->getVoidTy();
     }
 }

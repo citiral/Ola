@@ -20,7 +20,8 @@ int Shell::enter()
 	//while (!_shouldStop) {
 	//std::cout << "running code: " << getInput() << "\n";
 
-	executeCode(getInput());
+	_compiler.setCallback(std::bind(&Shell::getInput, this));
+	_compiler.compileProgram();
 	return 0;
 	//}
 }
@@ -32,23 +33,22 @@ void Shell::scheduleExit()
 
 std::string Shell::getInput()
 {
-	std::string input("\nfunction add(i32 x, i32 y) i32 {\n"
-							  "\t1+2+3\n"
+	/*static int i = 0;
+	std::string input = "";
+	if (i == 0)
+		input = std::string("\nfunction add(i32 x, i32 y) -> i32 {\n"
+							  "\tx+y\n"
 							  "}\n"
 			                  "function main() -> i32\n"
 			                  "{\n"
 			                  "\tadd(2+5+70,2*3+4*5)\n"
 			                  "}");
-	//input += getchar();
-	//std::cin >> input;
-	//std::string input;
-	//std::cin >> input;
+	i++;*/
+	std::string input;
+	std::cin >> input;
+	if (input.compare("QUIT") == 0)
+		return std::string("");
 	return input;
-}
-
-void Shell::executeCode(std::string code)
-{
-	_compiler.feed(code);
 }
 
 }

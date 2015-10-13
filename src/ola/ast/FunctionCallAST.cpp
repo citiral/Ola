@@ -10,10 +10,11 @@
 
 using namespace llvm;
 
-ola::FunctionCallAST::FunctionCallAST(std::string func, std::vector<std::unique_ptr<ola::ExpressionAST>> args)
-    : _func(func),
-      _args(std::move(args)),
-      _type(nullptr) {}
+ola::FunctionCallAST::FunctionCallAST(Lexer& l, std::string func, std::vector<std::unique_ptr<ola::ExpressionAST>> args):
+        ExpressionAST(l),
+        _func(func),
+        _args(std::move(args)),
+        _type(nullptr) {}
 
 
 std::unique_ptr<ola::FunctionCallAST> ola::FunctionCallAST::generate(std::string functionname, ola::Lexer &l) {
@@ -39,7 +40,7 @@ std::unique_ptr<ola::FunctionCallAST> ola::FunctionCallAST::generate(std::string
     //eat the close bracket
     l.nextToken();
 
-    return llvm::make_unique<FunctionCallAST>(functionname, std::move(args));
+    return llvm::make_unique<FunctionCallAST>(l, functionname, std::move(args));
 }
 
 ola::Type* ola::FunctionCallAST::getType() {

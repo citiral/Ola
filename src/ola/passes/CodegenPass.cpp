@@ -48,8 +48,9 @@ namespace ola {
     }
 
     void CodegenPass::accept(ExpressionKillerAST* ast) {
-        ast->visit(*this);
-        PUSH_AND_RETURN(llvm::UndefValue::get(_c.llvmBuilder.getVoidTy()));
+        ast->getExpression()->visit(*this);
+        //pop();
+        //PUSH_AND_RETURN(llvm::UndefValue::get(_c.llvmBuilder.getVoidTy()));
     }
 
     void CodegenPass::accept(ExpressionSeriesAST* ast) {
@@ -93,8 +94,11 @@ namespace ola {
             PUSH_AND_RETURN(nullptr);
         }
 
-        //return the body
-        _c.llvmBuilder.CreateRet(code);
+        //return the value, or void if is is a void return
+        if (ast->getExpressionSeries()->getType()->getType() == TypeType::PRIMITIVE_VOID)
+            _c.llvmBuilder.CreateRetVoid();
+        else
+            _c.llvmBuilder.CreateRet(code);
 
         //validate and return
         llvm::verifyFunction(*func);

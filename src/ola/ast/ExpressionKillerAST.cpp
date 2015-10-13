@@ -8,9 +8,10 @@ using namespace llvm;
 
 namespace ola {
 
-    ExpressionKillerAST::ExpressionKillerAST(std::unique_ptr<ExpressionAST> expression)
-        : _expression(std::move(expression)),
-          _type(nullptr) {}
+    ExpressionKillerAST::ExpressionKillerAST(Lexer& l, std::unique_ptr<ExpressionAST> expression):
+            ExpressionAST(l),
+            _expression(std::move(expression)),
+            _type(nullptr) {}
 
     Type* ExpressionKillerAST::getType() {
         return _type;

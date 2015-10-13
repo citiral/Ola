@@ -11,7 +11,7 @@ namespace ola {
     class VariableAST : public ExpressionAST {
     AST_NODE
     public:
-        VariableAST(std::string name);
+        VariableAST(Lexer& l, std::string name);
 
         Type* getType() override;
         std::string getName();

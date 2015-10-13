@@ -92,8 +92,8 @@ namespace ola {
 
         //setup the types
         std::vector<Type*> types;
-        u32 argsCount = ast->getArgsTypesNames().size();
-        for (u32 i = 0 ; i < argsCount ; i++)
+        u64 argsCount = ast->getArgsTypesNames().size();
+        for (u64 i = 0 ; i < argsCount ; i++)
             types.push_back(_c.types.getValue(ast->getArgsTypesNames()[i]));
         ast->setArgsTypes(types);
 

@@ -11,12 +11,13 @@
 #include <llvm/IR/Function.h>
 
 namespace ola {
-    FunctionPrototypeAST::FunctionPrototypeAST(std::string type, std::string name, std::vector<std::string> args,
-                                               std::vector<std::string> types)
-            : _typeName(type),
-              _name(name),
-              _args(std::move(args)),
-              _argsTypesNames(types) { }
+    FunctionPrototypeAST::FunctionPrototypeAST(Lexer& l, std::string type, std::string name, std::vector<std::string> args,
+                                               std::vector<std::string> types):
+            ASTNode(l),
+            _typeName(type),
+            _name(name),
+            _args(std::move(args)),
+            _argsTypesNames(types) { }
 
     std::unique_ptr<FunctionPrototypeAST> FunctionPrototypeAST::generate(Lexer &l) {
         //eat the function token
@@ -63,7 +64,7 @@ namespace ola {
         } else {
             type = "void";
         }
-        return llvm::make_unique<FunctionPrototypeAST>(type, name, std::move(args), std::move(types));
+        return llvm::make_unique<FunctionPrototypeAST>(l, type, name, std::move(args), std::move(types));
     }
 
     Type* FunctionPrototypeAST::getType() {

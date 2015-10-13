@@ -15,7 +15,7 @@ namespace ola {
     class ExpressionSeriesAST : public ExpressionAST {
     AST_NODE
     public:
-        ExpressionSeriesAST(std::vector<std::unique_ptr<ExpressionAST>> body);
+        ExpressionSeriesAST(Lexer& l, std::vector<std::unique_ptr<ExpressionAST>> body);
 
         static std::unique_ptr<ExpressionSeriesAST> generate(Lexer& l);
 

@@ -8,14 +8,15 @@
 using namespace llvm;
 
 namespace ola {
-    NumberIntegerAST::NumberIntegerAST(i32 value)
-            : _value(value),
-        _type(nullptr) { }
+    NumberIntegerAST::NumberIntegerAST(Lexer& l, i32 value):
+            ExpressionAST(l),
+            _value(value),
+            _type(nullptr) { }
 
     std::unique_ptr<NumberIntegerAST> NumberIntegerAST::generate(Lexer &l) {
         i64 number = atol(l.value.string.c_str());
         l.nextToken();
-        return llvm::make_unique<NumberIntegerAST>(number);
+        return llvm::make_unique<NumberIntegerAST>(l, number);
     }
 
     Type* NumberIntegerAST::getType() {

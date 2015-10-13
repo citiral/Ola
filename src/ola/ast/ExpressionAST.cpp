@@ -62,7 +62,7 @@ namespace ola {
         }
 
         //otherwise, we just return it as a variable ast
-        return llvm::make_unique<VariableAST>(identifiername);
+        return llvm::make_unique<VariableAST>(l, identifiername);
     }
 
 }

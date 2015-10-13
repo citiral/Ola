@@ -16,15 +16,15 @@ namespace ola {
 
     }
 
-    void OlaToLlvmCompiler::feed(std::string code)
+    /*void OlaToLlvmCompiler::feed(std::string code)
     {
         _lexer.loadBuffer(code.c_str());
         /*std::cout << "tokens: ";
         while (!_lexer.atEndOfBuffer())
             std::cout << (int)_lexer.nextToken() << " ";
-        std::cout << "\n";*/
+        std::cout << "\n";
         compileProgram();
-    }
+    }*/
 
     void OlaToLlvmCompiler::compileProgram() {
         //first, lex the program
@@ -45,7 +45,8 @@ namespace ola {
 
     void OlaToLlvmCompiler::runPass(std::vector<std::unique_ptr<ASTNode>>& nodes, AbstractPass& pass) {
         for (u32 i = 0 ; i < nodes.size() ; i++) {
-            nodes[i]->visit(pass);
+            if (nodes[i] != nullptr)
+                nodes[i]->visit(pass);
         }
     }
 
@@ -57,10 +58,9 @@ namespace ola {
         std::vector<std::unique_ptr<ASTNode>> astRoot;
 
         //keep looping untill we are out of tokens
-        while (!_lexer.atEndOfBuffer()) {
+        while (true) {
             //try to delegate the token to the correct compile function
             switch (_lexer.curToken()) {
-                case Token::Eob:
                 case Token::Eof:
                     return std::move(astRoot);
                 default:
@@ -74,13 +74,17 @@ namespace ola {
     }
 
     std::unique_ptr<ASTNode> OlaToLlvmCompiler::compileBlock() {
-
         switch (_lexer.curToken()) {
             case Token::Function: {
                 auto f = FunctionAST::generate(_lexer);
                 return std::move(f);
             } default:
+                //return nullptr;
                 COMPILE_GENERATE_AND_RETURN_ERROR(_lexer, "Unknown token in block.");
         }
+    }
+
+    void OlaToLlvmCompiler::setCallback(std::function<std::string()> inputCallback) {
+        _lexer.setCallback(std::move(inputCallback));
     }
 }

@@ -15,7 +15,6 @@ public:
 
 private:
 	std::string getInput();
-	void executeCode(std::string code);
 
 	std::string _code;
 
