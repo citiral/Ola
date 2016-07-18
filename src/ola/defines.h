@@ -14,7 +14,7 @@
 
 #define COMPILER_ASSERT(condition, message) \
 {\
-	if (!condition) {\
+	if (!(condition)) {\
 		COMPILER_ERROR(message)\
 	}\
 }\

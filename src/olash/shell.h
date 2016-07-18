@@ -16,8 +16,6 @@ public:
 private:
 	std::string getInput();
 
-	std::string _code;
-
 	//is put on true if the shell needs to exit
 	bool _shouldStop;
 

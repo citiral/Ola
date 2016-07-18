@@ -57,6 +57,13 @@ add_executable (olash
 	${PROJECT_SOURCE_DIR}/src/olash/olash.cpp
 	${PROJECT_SOURCE_DIR}/src/olash/shell.cpp
 )
+
+add_executable(olac
+        ${PROJECT_SOURCE_DIR}/src/olac/olac.cpp
+        src/olac/Arguments.cpp src/olac/Arguments.h src/olac/defines.h src/olac/olac.h src/olac/ArgumentNames.h)
+
 target_link_libraries (olash ola)
+target_link_libraries (olac ola)
 
 set_property (TARGET olash PROPERTY INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/src/ola/ ${LLVM_INCLUDE_DIRS})
+set_property (TARGET olac PROPERTY INCLUDE_DIRECTORIES ${PROJECT_SOURCE_DIR}/src/ola/ ${LLVM_INCLUDE_DIRS})

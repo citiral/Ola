@@ -31,7 +31,7 @@ namespace ola {
     }
 
     bool Lexer::atEndOfBuffer() {
-        return _input.c_str()[_bufferIndex] == '\0';
+        return _lastToken == Token::Eof;
     }
 
     void Lexer::nextChar() {
@@ -78,6 +78,12 @@ namespace ola {
 
     Token Lexer::curToken()
     {
+        if (_lastToken == Token::Eof) {
+            fetchInput();
+            return nextToken();
+        }
+
+        //if the current token is Eof, we get new input (lazy input)
         return _lastToken;
     }
 
@@ -87,10 +93,7 @@ namespace ola {
 
         //return eof if we are at the end
         if (curChar() == '\0') {
-            //because this statement might be ran on the first character of the buffer, peek for new information first
-            fetchInput();
-            if (curChar() == '\0')
-                return Token::Eof;
+            return Token::Eof;
         }
 
         Token ret;

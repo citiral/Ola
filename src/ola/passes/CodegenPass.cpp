@@ -102,7 +102,7 @@ namespace ola {
 
         //validate and return
         llvm::verifyFunction(*func);
-
+        func->dump();
         _c.llvmFunctions.addValue(ast->getPrototype()->getFunctionName(), func);
         return;
     }

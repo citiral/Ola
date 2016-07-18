@@ -24,6 +24,8 @@ public:
 	//feeds the compiler with the given code, which in turn gets immediately compiled.
 	void setCallback(std::function<std::string()> inputCallback);
 
+	Context* getContext();
+
 private:
 	//lexes the program and returns an array of root nodes (the blocks in the program)
 	std::vector<std::unique_ptr<ASTNode>> lexProgram();
@@ -37,6 +39,8 @@ private:
 	Lexer _lexer;
 	//context on which all passes will run
 	Context _c;
+	//list of all root ast nodes
+	std::vector<std::unique_ptr<ASTNode>> _root;
 };
 
 }

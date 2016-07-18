@@ -16,16 +16,6 @@ namespace ola {
 
     }
 
-    /*void OlaToLlvmCompiler::feed(std::string code)
-    {
-        _lexer.loadBuffer(code.c_str());
-        /*std::cout << "tokens: ";
-        while (!_lexer.atEndOfBuffer())
-            std::cout << (int)_lexer.nextToken() << " ";
-        std::cout << "\n";
-        compileProgram();
-    }*/
-
     void OlaToLlvmCompiler::compileProgram() {
         //first, lex the program
         auto root = lexProgram();
@@ -40,7 +30,9 @@ namespace ola {
         LogPass logPass(std::cout);
         runPass(root, logPass);
 
-        _c.llvmModule.dump();
+        //apend the new ast to the current root
+        for (auto& elem : root)
+            _root.push_back(std::move(elem));
     }
 
     void OlaToLlvmCompiler::runPass(std::vector<std::unique_ptr<ASTNode>>& nodes, AbstractPass& pass) {
@@ -58,7 +50,7 @@ namespace ola {
         std::vector<std::unique_ptr<ASTNode>> astRoot;
 
         //keep looping untill we are out of tokens
-        while (true) {
+        do {
             //try to delegate the token to the correct compile function
             switch (_lexer.curToken()) {
                 case Token::Eof:
@@ -68,7 +60,7 @@ namespace ola {
                     astRoot.push_back(std::move(elem));
                     break;
             }
-        }
+        } while (!_lexer.atEndOfBuffer());
 
         return std::move(astRoot);
     }
@@ -80,11 +72,15 @@ namespace ola {
                 return std::move(f);
             } default:
                 //return nullptr;
-                COMPILE_GENERATE_AND_RETURN_ERROR(_lexer, "Unknown token in block.");
+                COMPILE_GENERATE_AND_RETURN_ERROR(_lexer, "Unknown token in block: " << (i32)_lexer.curToken());
         }
     }
 
     void OlaToLlvmCompiler::setCallback(std::function<std::string()> inputCallback) {
         _lexer.setCallback(std::move(inputCallback));
+    }
+
+    Context* OlaToLlvmCompiler::getContext() {
+        return &_c;
     }
 }

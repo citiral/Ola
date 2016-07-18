@@ -17,13 +17,11 @@ Shell::~Shell()
 
 int Shell::enter()
 {
-	//while (!_shouldStop) {
-	//std::cout << "running code: " << getInput() << "\n";
-
-	_compiler.setCallback(std::bind(&Shell::getInput, this));
-	_compiler.compileProgram();
+	while (!_shouldStop) {
+		_compiler.setCallback(std::bind(&Shell::getInput, this));
+		_compiler.compileProgram();
+	}
 	return 0;
-	//}
 }
 
 void Shell::scheduleExit()
